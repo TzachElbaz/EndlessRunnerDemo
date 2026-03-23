@@ -6,8 +6,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 velocity;
     [SerializeField] private float jumpVelocity = 20;
     [SerializeField] private float groundHeight = 10;
-    
+    [SerializeField] private float maxHoldJumpTime = 0.4f;
+
+    private float holdJumpTimer = 0.0f;
     private bool isGrounded = true;
+    private bool isHoldongJump = false;
+
 
 
 
@@ -20,7 +24,9 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            Jump();
+            JumpSettings();
+        if (Input.GetKeyUp(KeyCode.Space))
+            isHoldongJump = false;
 
     }
 
@@ -28,24 +34,34 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         var position = transform.position;
-        if (!isGrounded) 
+        if (!isGrounded)
         {
-            position.y += velocity.y * Time.fixedDeltaTime;
-            velocity.y += gravity * Time.fixedDeltaTime;
+            if (isHoldongJump)
+            {
+                holdJumpTimer += Time.fixedDeltaTime;
+                if (holdJumpTimer >= maxHoldJumpTime)
+                    isHoldongJump = false;
+            }
 
-            if(position.y <= groundHeight)
+
+            position.y += velocity.y * Time.fixedDeltaTime;
+            if (!isHoldongJump)
+                velocity.y += gravity * Time.fixedDeltaTime;
+            if (position.y <= groundHeight)
             {
                 position.y = groundHeight;
                 isGrounded = true;
+                holdJumpTimer = 0.0f;
             }
         }
 
         transform.position = position;
     }
 
-    private void Jump()
+    private void JumpSettings()
     {
         isGrounded = false;
         velocity.y = jumpVelocity;
+        isHoldongJump = true;
     }
 }

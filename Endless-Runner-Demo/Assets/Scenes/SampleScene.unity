@@ -223,10 +223,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811999d4cbcab184fa5702415c07bda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  gravity: -15
+  gravity: -400
   velocity: {x: 0, y: 0}
-  jumpVelocity: 8
+  jumpVelocity: 50
   groundHeight: 10
+  maxHoldJumpTime: 0.2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
