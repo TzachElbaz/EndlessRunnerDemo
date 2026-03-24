@@ -7,20 +7,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpVelocity = 20;
     [SerializeField] private float maxHoldJumpTime = 0.4f;
     [SerializeField] private float jumpGroundThreshold = 1;
-
-    private Vector2 velocity;
-    private float groundHeight = 10;
     private float holdJumpTimer = 0.0f;
-    private bool isGrounded = true;
     private bool isHoldongJump = false;
+    private float groundHeight = 10;
 
+    [Header("Running")]
+    [SerializeField] private float acceleration = 10;
+    [SerializeField] private float maxXVelocity = 100;
+    private float maxAcceleration = 10;
 
+    public Vector2 velocity;
+    private bool isGrounded = true;
+    public float distance = 0;
 
-
-    void Start()
-    {
-
-    }
 
     // For Inputs
     void Update()
@@ -39,7 +38,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         var position = transform.position;
-        if (!isGrounded)
+        if (!isGrounded) //Jumping
         {
             if (isHoldongJump)
             {
@@ -58,6 +57,19 @@ public class Player : MonoBehaviour
                 isGrounded = true;
             }
         }
+        else // Running
+        {
+            float velocityRacio = velocity.x / maxXVelocity;
+            acceleration = maxAcceleration * (1 - velocityRacio);
+
+            velocity.x += acceleration * Time.fixedDeltaTime;
+            if (velocity.x >= maxXVelocity)
+            {
+                velocity.x = maxXVelocity;
+            }
+        }
+
+        distance += velocity.x * Time.fixedDeltaTime;
 
         transform.position = position;
     }
