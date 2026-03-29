@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxXVelocity = 100;
     private float maxAcceleration = 10;
 
+    [SerializeField] float rayStartingPoint = 1.7f;
+
     public Vector2 velocity;
     private bool isGrounded = true;
     public float distance = 0;
@@ -51,11 +53,13 @@ public class Player : MonoBehaviour
             position.y += velocity.y * Time.fixedDeltaTime;
             if (!isHoldongJump)
                 velocity.y += gravity * Time.fixedDeltaTime;
-            if (position.y <= groundHeight) // onLanding
+
+            if (GroundCheck(position)) // landing
             {
                 position.y = groundHeight;
                 isGrounded = true;
             }
+
         }
         else // Running
         {
@@ -80,5 +84,17 @@ public class Player : MonoBehaviour
         velocity.y = jumpVelocity;
         isHoldongJump = true;
         holdJumpTimer = 0.0f;
+    }
+
+    private bool GroundCheck(Vector2 position)
+    {
+        Vector2 rayOrigin = new Vector2(position.x + rayStartingPoint, position.y);
+        Vector2 rayDirection = Vector2.up;
+        float rayDistance = velocity.y * Time.fixedDeltaTime;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
+
+        Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
+
+        return hit.collider != null && hit.collider.gameObject.CompareTag("Ground");
     }
 }
