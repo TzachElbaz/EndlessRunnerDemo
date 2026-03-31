@@ -16,7 +16,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxXVelocity = 100;
     private float maxAcceleration = 10;
 
-    [SerializeField] float rayStartingPoint = 1.7f;
+    [SerializeField] float landingRayStartingPoint = 1.3f;
+    [SerializeField] float fallingRayStartingPoint = 1.3f;
+
 
     public Vector2 velocity;
     private bool isGrounded = true;
@@ -71,6 +73,8 @@ public class Player : MonoBehaviour
             {
                 velocity.x = maxXVelocity;
             }
+
+            isGrounded = FallCheck(position);
         }
 
         distance += velocity.x * Time.fixedDeltaTime;
@@ -88,7 +92,7 @@ public class Player : MonoBehaviour
 
     private bool GroundCheck(Vector2 position)
     {
-        Vector2 rayOrigin = new Vector2(position.x + rayStartingPoint, position.y);
+        Vector2 rayOrigin = new Vector2(position.x + landingRayStartingPoint, position.y);
         Vector2 rayDirection = Vector2.up;
         float rayDistance = velocity.y * Time.fixedDeltaTime;
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
@@ -96,5 +100,16 @@ public class Player : MonoBehaviour
         Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
 
         return hit.collider != null && hit.collider.gameObject.CompareTag("Ground");
+    }
+    private bool FallCheck(Vector2 position)
+    {
+        Vector2 rayOrigin = new Vector2(position.x - fallingRayStartingPoint, position.y);
+        Vector2 rayDirection = Vector2.up;
+        float rayDistance = velocity.y * Time.fixedDeltaTime;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
+
+        Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
+
+        return !(hit.collider == null); // if not colliding with anything, isGrounded = false
     }
 }

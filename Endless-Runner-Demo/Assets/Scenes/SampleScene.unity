@@ -636,6 +636,8 @@ MonoBehaviour:
   jumpGroundThreshold: 2
   acceleration: 10
   maxXVelocity: 100
+  landingRayStartingPoint: 1.3
+  fallingRayStartingPoint: 1.3
   velocity: {x: 0, y: 0}
   distance: 0
 --- !u!4 &335309341
@@ -1675,8 +1677,12 @@ PrefabInstance:
       value: bg1
       objectReference: {fileID: 0}
     - target: {fileID: 8763808242514669341, guid: 73d54f649e455db4db209fbe0696b499, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -37.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763808242514669341, guid: 73d54f649e455db4db209fbe0696b499, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.42
+      value: -12.1
       objectReference: {fileID: 0}
     - target: {fileID: 8763808242514669341, guid: 73d54f649e455db4db209fbe0696b499, type: 3}
       propertyPath: m_LocalPosition.y
