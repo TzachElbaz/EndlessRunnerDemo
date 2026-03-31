@@ -3,9 +3,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Jumping")]
-    [SerializeField] private float gravity;
-    [SerializeField] private float jumpVelocity = 20;
-    [SerializeField] private float maxHoldJumpTime = 0.4f;
+    [SerializeField] public float gravity;
+    [SerializeField] public float jumpVelocity = 20;
+    [SerializeField] public float maxHoldJumpTime = 0.4f;
     [SerializeField] private float jumpGroundThreshold = 1;
     private float holdJumpTimer = 0.0f;
     private bool isHoldongJump = false;

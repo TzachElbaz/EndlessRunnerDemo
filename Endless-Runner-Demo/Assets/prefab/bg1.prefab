@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8763808242514669341}
   - component: {fileID: 5892845515505118983}
-  - component: {fileID: 5772020801809111439}
   - component: {fileID: 1939794771498404572}
   - component: {fileID: 3582846931120993345}
   m_Layer: 0
@@ -30,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.42, y: 5.58, z: 0}
-  m_LocalScale: {x: -30.72, y: -7.8474636, z: 0}
+  m_LocalScale: {x: 43.13, y: 8, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,19 +93,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &5772020801809111439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7510311413373276385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a048ccc0ab04e3140b4c2f3f310f8f5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Parallax
-  depth: 1
 --- !u!61 &1939794771498404572
 BoxCollider2D:
   m_ObjectHideFlags: 0
