@@ -126,20 +126,6 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireCube(origin, _groundCheckSize);
     }
 
-
-    //private bool GroundCheck()
-    //{
-    //    Vector2 origin = new Vector2(transform.position.x + _landingRayStartingPoint, transform.position.y);
-    //    return Physics2D.Raycast(origin, Vector2.down, _groundCheckDistance, _groundLayers);
-    //}
-
-    //private void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = _groundCheckColor;
-    //    Vector2 origin = new Vector2(transform.position.x + _landingRayStartingPoint, transform.position.y);
-    //    Gizmos.DrawLine(origin, origin + Vector2.down * _groundCheckDistance);
-    //}
-
     private void ReturnToStart()
     {
         Vector2 pos = transform.position;
