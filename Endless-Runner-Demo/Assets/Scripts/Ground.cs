@@ -49,9 +49,9 @@ public class Ground : MonoBehaviour
         GameObject go = Instantiate(gameObject);
         Vector2 pos;
 
-        float h1 = player.jumpVelocity * player.maxHoldJumpTime;
-        float t = player.jumpVelocity / player.gravity;
-        float h2 = player.jumpVelocity * t + (0.5f * (player.gravity * (t * t)));
+        float h1 = player.jumpForce * player.maxHoldJumpTime;
+        float t = player.jumpForce / player.gravity;
+        float h2 = player.jumpForce * t + (0.5f * (player.gravity * (t * t)));
         float maxJumpHeight = h1 + h2;
         float maxY = player.transform.position.y + maxJumpHeight;
         maxY *= 0.7f;

@@ -2,143 +2,150 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Rigidbody2D _rigidbody;
+
     [Header("Jumping")]
     [SerializeField] public float gravity;
-    [SerializeField] public float jumpVelocity = 20;
+    [SerializeField] public float jumpForce = 20f;
     [SerializeField] public float maxHoldJumpTime = 0.4f;
-    [SerializeField] private float jumpGroundThreshold = 1;
-    private float holdJumpTimer = 0.0f;
-    private bool isHoldongJump = false;
-    private float groundHeight = 10;
+
+    private float holdJumpTimer = 0f;
+    private bool isHoldingJump = false;
 
     [Header("Running")]
-    [SerializeField] private float acceleration = 10;
-    [SerializeField] private float maxXVelocity = 100;
-    private float maxAcceleration = 10;
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float maxXVelocity = 100f;
+    private float maxAcceleration = 10f;
 
-    [SerializeField] float landingRayStartingPoint = 1.3f;
-    [SerializeField] float fallingRayStartingPoint = 1.3f;
+    [Header("Collision")]
+    [SerializeField] private float _groundCheckDistance = 0.1f;
+    [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.5f, 0.1f);
+    [SerializeField] private LayerMask _groundLayers;
+    [SerializeField] private Color _groundCheckColor;
+
+    private bool isGrounded;
 
     public Vector2 velocity;
-    private bool isGrounded = true;
-    public float distance = 0;
+    public float distance = 0f;
 
-    // Stores the player's initial position
     private Vector2 startingPosition;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
         startingPosition = transform.position;
+        gravity = _rigidbody.gravityScale;
     }
 
-    // For Inputs
-    void Update()
+    private void Update()
     {
-        Vector2 position = transform.position;
-        float groundDistance = Mathf.Abs(position.y - groundHeight);
+        isGrounded = GroundCheck();
 
-        if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || groundDistance <= jumpGroundThreshold))
-            JumpSettings();
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            JumpStart();
+        }
+
         if (Input.GetKeyUp(KeyCode.Space))
-            isHoldongJump = false;
-        if(transform.position.y < -3.45)
-            ReturnToStart();
+        {
+            isHoldingJump = false;
+            // Cut upward momentum if still going up
+            if (_rigidbody.linearVelocity.y > 0f)
+            {
+                _rigidbody.linearVelocity = new Vector2(
+                    _rigidbody.linearVelocity.x,
+                    _rigidbody.linearVelocity.y * 0.5f
+                );
+            }
+        }
 
+        if (transform.position.y < -3.45f)
+        {
+            ReturnToStart();
+        }
     }
 
-    // For Movement
     private void FixedUpdate()
     {
-        var position = transform.position;
-        if (!isGrounded) //Jumping
-        {
-            if (isHoldongJump)
-            {
-                holdJumpTimer += Time.fixedDeltaTime;
-                if (holdJumpTimer >= maxHoldJumpTime)
-                    isHoldongJump = false;
-            }
+        // Running (affects distance only)
+        float velocityRatio = velocity.x / maxXVelocity;
+        float currentAcceleration = maxAcceleration * (1 - velocityRatio);
 
-            position.y += velocity.y * Time.fixedDeltaTime;
-            if (!isHoldongJump)
-                velocity.y += gravity * Time.fixedDeltaTime;
-
-            var ground = GroundCheck(position);
-            if (ground != null) // landing
-            {
-                groundHeight = ground.GroundHeight;
-                position.y = groundHeight;
-                velocity.y = 0;
-                isGrounded = true;
-            }
-
-        }
-        else // Running
-        {
-            float velocityRacio = velocity.x / maxXVelocity;
-            acceleration = maxAcceleration * (1 - velocityRacio);
-
-            velocity.x += acceleration * Time.fixedDeltaTime;
-            if (velocity.x >= maxXVelocity)
-            {
-                velocity.x = maxXVelocity;
-            }
-
-            isGrounded = FallCheck(position);
-        }
+        velocity.x += currentAcceleration * Time.fixedDeltaTime;
+        velocity.x = Mathf.Min(velocity.x, maxXVelocity);
 
         distance += velocity.x * Time.fixedDeltaTime;
 
-        transform.position = position;
-    }
-
-    private void JumpSettings()
-    {
-        isGrounded = false;
-        velocity.y = jumpVelocity;
-        isHoldongJump = true;
-        holdJumpTimer = 0.0f;
-    }
-
-    private Ground GroundCheck(Vector2 position)
-    {
-        Vector2 rayOrigin = new Vector2(position.x + landingRayStartingPoint, position.y);
-        Vector2 rayDirection = Vector2.up;
-        float rayDistance = velocity.y * Time.fixedDeltaTime;
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
-
-        Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
-
-        if (hit.collider != null && hit.collider.gameObject.CompareTag("Ground"))
+        // Jump and gravity
+        if (!isGrounded)
         {
-            var ground = hit.collider.gameObject.GetComponent<Ground>();
-            return ground;
+            if (isHoldingJump)
+            {
+                holdJumpTimer += Time.fixedDeltaTime;
+
+                if (holdJumpTimer < maxHoldJumpTime)
+                {
+                    _rigidbody.AddForce(Vector2.up * jumpForce * 0.5f * Time.fixedDeltaTime, ForceMode2D.Force);
+                }
+                else
+                {
+                    isHoldingJump = false;
+                }
+            }
+
+            _rigidbody.linearVelocity += Vector2.up * gravity * Time.fixedDeltaTime;
         }
-        return null;
-
     }
-    private bool FallCheck(Vector2 position)
+
+    private void JumpStart()
     {
-        Vector2 rayOrigin = new Vector2(position.x - fallingRayStartingPoint, position.y);
-        Vector2 rayDirection = Vector2.up;
-        float rayDistance = velocity.y * Time.fixedDeltaTime;
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
+        isHoldingJump = true;
+        holdJumpTimer = 0f;
 
-        Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
-
-        return !(hit.collider == null); // if not colliding with anything, isGrounded = false
+        _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, 0f);
+        _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
+
+
+    private bool GroundCheck()
+    {
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _groundCheckDistance);
+
+        RaycastHit2D hit = Physics2D.BoxCast(origin, _groundCheckSize, 0f, Vector2.down, _groundCheckDistance, _groundLayers);
+        return hit.collider != null;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = _groundCheckColor;
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _groundCheckDistance);
+        Gizmos.DrawWireCube(origin, _groundCheckSize);
+    }
+
+
+    //private bool GroundCheck()
+    //{
+    //    Vector2 origin = new Vector2(transform.position.x + _landingRayStartingPoint, transform.position.y);
+    //    return Physics2D.Raycast(origin, Vector2.down, _groundCheckDistance, _groundLayers);
+    //}
+
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = _groundCheckColor;
+    //    Vector2 origin = new Vector2(transform.position.x + _landingRayStartingPoint, transform.position.y);
+    //    Gizmos.DrawLine(origin, origin + Vector2.down * _groundCheckDistance);
+    //}
 
     private void ReturnToStart()
     {
-        var pos = transform.position;
-        pos.y = startingPosition.y + 20f; 
+        Vector2 pos = transform.position;
+        pos.y = startingPosition.y + 20f;
         transform.position = pos;
-    }
 
-    //private void LogToConsole()
-    //{
-    //    Debug.Log($"Player position y = {transform.position.y}");
-    //    Debug.Log($"Ground height = {groundHeight}");
-    //}
+        _rigidbody.linearVelocity = Vector2.zero;
+    }
 }
