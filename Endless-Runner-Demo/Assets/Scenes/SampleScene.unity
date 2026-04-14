@@ -589,7 +589,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 788063991404319718, guid: 8f7a84aaefa04a34a93b4d4224634547, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -633,10 +633,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   gravity: 10
-  jumpForce: 45
+  jumpForce: 70
   maxHoldJumpTime: 0.5
-  acceleration: 2
-  maxXVelocity: 80
+  acceleration: 3
+  maxXVelocity: 120
   _groundCheckDistance: 0.06
   _groundCheckSize: {x: 2.68, y: 0.18}
   _groundLayers:
@@ -722,7 +722,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 10
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1901,7 +1901,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 788063991404319718, guid: 8f7a84aaefa04a34a93b4d4224634547, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
