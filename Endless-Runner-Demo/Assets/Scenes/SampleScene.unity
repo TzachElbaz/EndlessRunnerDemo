@@ -256,13 +256,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RunGameManeger
   _Player: {fileID: 335309340}
   _PlayerObject: {fileID: 335309339}
-  _Obstecl:
+  _forestObstecl:
   - {fileID: 5607722697183440384, guid: e4fe4083e7a70cf42a6b59c68350dfee, type: 3}
   - {fileID: 7673543996426664008, guid: e79e9ac88b3e74a4096ebe526be827f4, type: 3}
   - {fileID: 6649315052734820357, guid: 62151012c58657542806a99eab8e333e, type: 3}
-  _ObsteclCurse: []
+  _forestObsteclCurse:
+  - {fileID: 3711225835351693844, guid: 5bdd7177e7b7373428560161951ae254, type: 3}
+  _desertObstecl: []
+  _desertObsteclCurse: []
   _Xspon: 120
   _Yspon: 1
+  _obstacleCurseCount: 5
+  _curentScreen: 0
 --- !u!1 &163390213
 GameObject:
   m_ObjectHideFlags: 0

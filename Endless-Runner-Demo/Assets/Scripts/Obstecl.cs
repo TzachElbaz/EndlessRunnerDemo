@@ -23,4 +23,12 @@ public class Obstecl : MonoBehaviour
 
         transform.position = position;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector2 endPosition = new Vector2 (transform.position.x + _GenerateDistance, transform.position.y);
+        Gizmos.DrawLine(transform.position, endPosition);
+        Gizmos.DrawLine(endPosition, new Vector2(endPosition.x, endPosition.y + 5));
+    }
 }
