@@ -8,12 +8,8 @@ public class Player : MonoBehaviour
     private BoxCollider2D _boxCollider;
 
     [Header("Jumping")]
-    [SerializeField] public float gravity;
     [SerializeField] public float jumpForce = 20f;
-    [SerializeField] public float maxHoldJumpTime = 0.4f;
-
-    private float holdJumpTimer = 0f;
-    private bool isHoldingJump = false;
+    public int jumpRemaining = 2;
 
     [Header("Running")]
     [SerializeField] private float acceleration = 10f;
@@ -30,14 +26,14 @@ public class Player : MonoBehaviour
     private Vector2 standingOffset;
     private Vector2 rollingOffset;
 
-
-
     [Header("Rolling")]
     [SerializeField] private float rollDuration = .6f;
     private bool isRolling = false;
-
     private bool isGrounded;
+
+    [HideInInspector]
     public Vector2 velocity;
+    [HideInInspector]
     public float distance = 0f;
 
     private Vector2 startingPosition;
@@ -53,12 +49,13 @@ public class Player : MonoBehaviour
     {
         SetColliders();
         startingPosition = transform.position;
-        gravity = _rigidbody.gravityScale;
     }
 
     private void Update()
     {
-        isGrounded = GroundCheck();
+        //isGrounded = GroundCheck();
+        //if (isGrounded)
+        //    jumpRemaining = 2;
 
         HandleInput();
         PlayerAnimation();
@@ -71,7 +68,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
         float velocityRatio = velocity.x / maxXVelocity;
         float currentAcceleration = maxAcceleration * (1 - velocityRatio);
 
@@ -79,33 +76,14 @@ public class Player : MonoBehaviour
         velocity.x = Mathf.Min(velocity.x, maxXVelocity);
 
         distance += velocity.x * Time.fixedDeltaTime;
-
-        // Jump and gravity
-        if (!isGrounded)
-        {
-            if (isHoldingJump)
-            {
-                holdJumpTimer += Time.fixedDeltaTime;
-
-                if (holdJumpTimer < maxHoldJumpTime)
-                {
-                    _rigidbody.AddForce(Vector2.up * jumpForce * 0.5f * Time.fixedDeltaTime, ForceMode2D.Force);
-                }
-                else
-                {
-                    isHoldingJump = false;
-                }
-            }
-
-            _rigidbody.linearVelocity += Vector2.up * gravity * Time.fixedDeltaTime;
-        }
     }
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && CanPlayerJump())
         {
-            JumpStart();
+            isGrounded = false;
+            Jump();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -119,11 +97,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void JumpStart()
+    private void Jump()
     {
-        isHoldingJump = true;
-        holdJumpTimer = 0f;
-
+        jumpRemaining -= 1;
         _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, 0f);
         _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
@@ -151,6 +127,9 @@ public class Player : MonoBehaviour
 
     private void Roll()
     {
+        if (!isGrounded)
+            return;
+
         _boxCollider.size = rollingSize;
         _boxCollider.offset = rollingOffset;
         StopAllCoroutines();
@@ -177,7 +156,24 @@ public class Player : MonoBehaviour
         standingSize = new Vector2(_boxCollider.size.x, _boxCollider.size.y);
         standingOffset = new Vector2(_boxCollider.offset.x, _boxCollider.offset.y);
         rollingSize = new Vector2(_boxCollider.size.x, _boxCollider.size.y / 2);
-        rollingOffset = new Vector2(_boxCollider.offset.x, _boxCollider.offset.y/2);
+        rollingOffset = new Vector2(_boxCollider.offset.x, _boxCollider.offset.y / 2);
+    }
+
+    private bool CanPlayerJump()
+    {
+        if (isRolling)
+            return false;
+
+        return isGrounded || jumpRemaining > 0;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground") && GroundCheck())
+        {
+            isGrounded = true;
+            jumpRemaining = 2;
+        }
     }
 
     private void ReturnToStart()
