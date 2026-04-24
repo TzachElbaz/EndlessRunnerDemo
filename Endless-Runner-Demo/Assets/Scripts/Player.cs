@@ -1,8 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
+    private Animator _animation;
+    private BoxCollider2D _boxCollider;
 
     [Header("Jumping")]
     [SerializeField] public float gravity;
@@ -22,9 +25,18 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.5f, 0.1f);
     [SerializeField] private LayerMask _groundLayers;
     [SerializeField] private Color _groundCheckColor;
+    private Vector2 standingSize;
+    private Vector2 rollingSize;
+    private Vector2 standingOffset;
+    private Vector2 rollingOffset;
+
+
+
+    [Header("Rolling")]
+    [SerializeField] private float rollDuration = .6f;
+    private bool isRolling = false;
 
     private bool isGrounded;
-
     public Vector2 velocity;
     public float distance = 0f;
 
@@ -33,10 +45,13 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _animation = GetComponentInChildren<Animator>();
+        _boxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Start()
     {
+        SetColliders();
         startingPosition = transform.position;
         gravity = _rigidbody.gravityScale;
     }
@@ -45,23 +60,8 @@ public class Player : MonoBehaviour
     {
         isGrounded = GroundCheck();
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            JumpStart();
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            isHoldingJump = false;
-            // Cut upward momentum if still going up
-            if (_rigidbody.linearVelocity.y > 0f)
-            {
-                _rigidbody.linearVelocity = new Vector2(
-                    _rigidbody.linearVelocity.x,
-                    _rigidbody.linearVelocity.y * 0.5f
-                );
-            }
-        }
+        HandleInput();
+        PlayerAnimation();
 
         if (transform.position.y < -3.45f)
         {
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Running (affects distance only)
+        
         float velocityRatio = velocity.x / maxXVelocity;
         float currentAcceleration = maxAcceleration * (1 - velocityRatio);
 
@@ -101,6 +101,24 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            JumpStart();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Roll();
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            StopCoroutine(RollRutine());
+            EndRolling();
+        }
+    }
+
     private void JumpStart()
     {
         isHoldingJump = true;
@@ -126,6 +144,42 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireCube(origin, _groundCheckSize);
     }
 
+    private void PlayerAnimation()
+    {
+        _animation.SetBool("isRolling", isRolling);
+    }
+
+    private void Roll()
+    {
+        _boxCollider.size = rollingSize;
+        _boxCollider.offset = rollingOffset;
+        StopAllCoroutines();
+        StartCoroutine(RollRutine());
+    }
+
+    private IEnumerator RollRutine()
+    {
+        isRolling = true;
+        yield return new WaitForSeconds(rollDuration);
+        EndRolling();
+    }
+
+    private void EndRolling()
+    {
+        isRolling = false;
+        _boxCollider.size = standingSize;
+        _boxCollider.offset = standingOffset;
+
+    }
+
+    private void SetColliders()
+    {
+        standingSize = new Vector2(_boxCollider.size.x, _boxCollider.size.y);
+        standingOffset = new Vector2(_boxCollider.offset.x, _boxCollider.offset.y);
+        rollingSize = new Vector2(_boxCollider.size.x, _boxCollider.size.y / 2);
+        rollingOffset = new Vector2(_boxCollider.offset.x, _boxCollider.offset.y/2);
+    }
+
     private void ReturnToStart()
     {
         Vector2 pos = transform.position;
@@ -134,4 +188,5 @@ public class Player : MonoBehaviour
 
         _rigidbody.linearVelocity = Vector2.zero;
     }
+
 }
