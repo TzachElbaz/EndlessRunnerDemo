@@ -678,10 +678,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811999d4cbcab184fa5702415c07bda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  gravity: 10
-  jumpForce: 30
+  firstJumpForce: 25
+  doubleJumpForce: 30
   acceleration: 40
-  maxXVelocity: 120
+  maxXVelocity: 180
   _groundCheckDistance: 0.06
   _groundCheckSize: {x: 2.68, y: 0.18}
   _groundLayers:
