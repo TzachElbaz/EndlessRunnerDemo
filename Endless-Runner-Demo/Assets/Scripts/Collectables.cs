@@ -17,7 +17,7 @@ public class Collectables : MonoBehaviour
     private void Awake()
     {
         collectables = GameObject.FindAnyObjectByType<CollectablesManager>();
-        _zone = _so._zone;
+        //_zone = _so._zone;
 
         
     }
