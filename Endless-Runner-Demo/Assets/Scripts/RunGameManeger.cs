@@ -17,6 +17,7 @@ public class RunGameManeger : MonoBehaviour
     private GameObject _LastObject;
     private int _obstacleCounter;
     private Vector2 _spawnPoint;
+    
 
     public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
     GameObject[] _curentObstecl;
