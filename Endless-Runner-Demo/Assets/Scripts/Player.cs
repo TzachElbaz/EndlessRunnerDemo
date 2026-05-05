@@ -125,6 +125,8 @@ public class Player : MonoBehaviour
     private void PlayerAnimation()
     {
         _animation.SetBool("isRolling", isRolling);
+        _animation.SetFloat("yVelocity", _rigidbody.linearVelocityY);
+        _animation.SetBool("isGrounded", isGrounded);
     }
 
     private void Roll()
