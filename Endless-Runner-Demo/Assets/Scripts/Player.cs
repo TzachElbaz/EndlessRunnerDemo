@@ -8,8 +8,9 @@ public class Player : MonoBehaviour
     private BoxCollider2D _boxCollider;
 
     [Header("Jumping")]
-    [SerializeField] public float jumpForce = 20f;
-    public int jumpRemaining = 2;
+    [SerializeField] public float firstJumpForce = 25f;
+    [SerializeField] public float doubleJumpForce = 30f;
+    private int jumpRemaining = 2;
 
     [Header("Running")]
     [SerializeField] private float acceleration = 10f;
@@ -100,8 +101,9 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         jumpRemaining -= 1;
+        float jumpingForce = jumpRemaining == 1 ? firstJumpForce : doubleJumpForce;
         _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, 0f);
-        _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        _rigidbody.AddForce(Vector2.up * jumpingForce, ForceMode2D.Impulse);
     }
 
 
