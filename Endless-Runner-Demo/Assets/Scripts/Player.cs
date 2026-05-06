@@ -29,8 +29,10 @@ public class Player : MonoBehaviour
 
     [Header("Rolling")]
     [SerializeField] private float rollDuration = .6f;
+    [SerializeField] private float fastFallVelocity = 40f;
     private bool isRolling = false;
     private bool isGrounded;
+    private bool rollOnLand = false;
 
     [HideInInspector]
     public Vector2 velocity;
@@ -91,13 +93,17 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            Roll();
+            if (isGrounded)
+            {
+                Roll();
+            }
+            else
+            {
+                // Air roll: force player down and set flag to roll on landing
+                _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, -Mathf.Abs(fastFallVelocity));
+                rollOnLand = true;
+            }
         }
-        //if (Input.GetKeyUp(KeyCode.DownArrow))
-        //{
-        //    StopCoroutine(RollRutine());
-        //    EndRolling();
-        //}
     }
 
     private void Jump()
@@ -175,6 +181,12 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
             jumpRemaining = 2;
+
+            if (rollOnLand)
+            {
+                rollOnLand = false;
+                Roll();
+            }
         }
     }
 
