@@ -194,7 +194,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!4 &37680696
 Transform:
@@ -293,7 +293,7 @@ MonoBehaviour:
   _Yspon: 1
   _obstacleCurseCount: 5
   _curentScreen: 0
-  _obstaclePause: 0
+  _obstaclePause: 1
 --- !u!114 &84267935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,8 +747,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811999d4cbcab184fa5702415c07bda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  jumpForce: 60
-  jumpRemaining: 2
+  firstJumpForce: 42
+  doubleJumpForce: 30
   acceleration: 3
   maxXVelocity: 20
   _groundCheckDistance: 3.05
@@ -757,7 +757,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _groundCheckColor: {r: 1, g: 0, b: 0, a: 1}
-  rollDuration: 0.6
+  rollDuration: 0.7
+  fastFallVelocity: 40
   velocity: {x: 0, y: 0}
   distance: 0
 --- !u!4 &335309341
