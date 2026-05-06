@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [Header("Running")]
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float maxXVelocity = 100f;
-    private float maxAcceleration = 10f;
+    //private float maxAcceleration = 10f;
 
     [Header("Collision")]
     [SerializeField] private float _groundCheckDistance = 0.1f;
@@ -54,9 +54,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        //isGrounded = GroundCheck();
-        //if (isGrounded)
-        //    jumpRemaining = 2;
 
         HandleInput();
         PlayerAnimation();
@@ -71,7 +68,7 @@ public class Player : MonoBehaviour
     {
 
         float velocityRatio = velocity.x / maxXVelocity;
-        float currentAcceleration = maxAcceleration * (1 - velocityRatio);
+        float currentAcceleration = acceleration * (1 - velocityRatio);
 
         velocity.x += currentAcceleration * Time.fixedDeltaTime;
         velocity.x = Mathf.Min(velocity.x, maxXVelocity);
@@ -83,6 +80,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && CanPlayerJump())
         {
+            if (isRolling)
+            {
+                StopCoroutine(RollRutine());
+                EndRolling();
+            }
             isGrounded = false;
             Jump();
         }
@@ -91,11 +93,11 @@ public class Player : MonoBehaviour
         {
             Roll();
         }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            StopCoroutine(RollRutine());
-            EndRolling();
-        }
+        //if (Input.GetKeyUp(KeyCode.DownArrow))
+        //{
+        //    StopCoroutine(RollRutine());
+        //    EndRolling();
+        //}
     }
 
     private void Jump()
@@ -164,9 +166,6 @@ public class Player : MonoBehaviour
 
     private bool CanPlayerJump()
     {
-        if (isRolling)
-            return false;
-
         return isGrounded || jumpRemaining > 0;
     }
 
