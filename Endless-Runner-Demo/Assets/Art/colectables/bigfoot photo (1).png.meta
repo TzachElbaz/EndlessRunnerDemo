@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: d6237b92b0d6623418bd2724c0186f4f
+guid: be0ce33c084620c419b25bfb16d2e695
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1358156200808005264
-    second: mockup 1_0
+      213: 7243816863103722908
+    second: bigfoot photo (1)_0
+  - first:
+      213: 4300424047661147723
+    second: bigfoot photo (1)_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,23 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mockup 1_0
+      name: bigfoot photo (1)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 9
+        y: 41
+        width: 13
+        height: 14
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 09eb7aa6ed329d210800000000000000
-      internalID: 1358156200808005264
+      spriteID: c95284fbe05378460800000000000000
+      internalID: 7243816863103722908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bigfoot photo (1)_1
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 9
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b46e36003ec2eab30800000000000000
+      internalID: 4300424047661147723
       vertices: []
       indices: 
       edges: []
@@ -138,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dc734c0ae21645b4eb270c4b0dcbb1b3
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -146,11 +171,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      mockup 1_0: 1358156200808005264
+      bigfoot photo (1)_0: 7243816863103722908
+      bigfoot photo (1)_1: 4300424047661147723
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
