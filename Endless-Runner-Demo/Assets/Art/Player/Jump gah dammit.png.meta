@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 2ce5b6e206fc080498d81bd36873b024
+guid: 1cebc28d54df6b445b21dff20deacc6b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 9172836230462029077
-    second: mockup roll (1)_0
+      213: 6386804855142009061
+    second: Jump gah dammit_0
+  - first:
+      213: -5801937023826955398
+    second: Jump gah dammit_1
+  - first:
+      213: -1201213042621946386
+    second: Jump gah dammit_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +43,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +81,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -96,24 +102,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mockup roll (1)_0
+      name: Jump gah dammit_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51db58ba3f57c4f70800000000000000
-      internalID: 9172836230462029077
+      spriteID: 5e8ca705d2d72a850800000000000000
+      internalID: 6386804855142009061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jump gah dammit_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a737b9d44016b7fa0800000000000000
+      internalID: -5801937023826955398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jump gah dammit_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee5e3fe1a1f645fe0800000000000000
+      internalID: -1201213042621946386
       vertices: []
       indices: 
       edges: []
@@ -138,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9cf2c1c5db98f9f4cba011ed2e6ec55e
+    spriteID: 9fa4535c4119d6f4fb962348dc19d3bf
     internalID: 0
     vertices: []
     indices: 
@@ -150,7 +187,9 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      mockup roll (1)_0: 9172836230462029077
+      Jump gah dammit_0: 6386804855142009061
+      Jump gah dammit_1: -5801937023826955398
+      Jump gah dammit_2: -1201213042621946386
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [Header("Running")]
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float maxXVelocity = 100f;
-    private float maxAcceleration = 10f;
+    //private float maxAcceleration = 10f;
 
     [Header("Collision")]
     [SerializeField] private float _groundCheckDistance = 0.1f;
@@ -29,8 +29,10 @@ public class Player : MonoBehaviour
 
     [Header("Rolling")]
     [SerializeField] private float rollDuration = .6f;
+    [SerializeField] private float fastFallVelocity = 40f;
     private bool isRolling = false;
     private bool isGrounded;
+    private bool rollOnLand = false;
 
     [HideInInspector]
     public Vector2 velocity;
@@ -54,9 +56,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        //isGrounded = GroundCheck();
-        //if (isGrounded)
-        //    jumpRemaining = 2;
 
         HandleInput();
         PlayerAnimation();
@@ -71,7 +70,7 @@ public class Player : MonoBehaviour
     {
 
         float velocityRatio = velocity.x / maxXVelocity;
-        float currentAcceleration = maxAcceleration * (1 - velocityRatio);
+        float currentAcceleration = acceleration * (1 - velocityRatio);
 
         velocity.x += currentAcceleration * Time.fixedDeltaTime;
         velocity.x = Mathf.Min(velocity.x, maxXVelocity);
@@ -83,18 +82,27 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && CanPlayerJump())
         {
+            if (isRolling)
+            {
+                StopCoroutine(RollRutine());
+                EndRolling();
+            }
             isGrounded = false;
             Jump();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            Roll();
-        }
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            StopCoroutine(RollRutine());
-            EndRolling();
+            if (isGrounded)
+            {
+                Roll();
+            }
+            else
+            {
+                // Air roll: force player down and set flag to roll on landing
+                _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, -Mathf.Abs(fastFallVelocity));
+                rollOnLand = true;
+            }
         }
     }
 
@@ -125,6 +133,7 @@ public class Player : MonoBehaviour
     private void PlayerAnimation()
     {
         _animation.SetBool("isRolling", isRolling);
+        _animation.SetBool("isGrounded", isGrounded);
     }
 
     private void Roll()
@@ -163,9 +172,6 @@ public class Player : MonoBehaviour
 
     private bool CanPlayerJump()
     {
-        if (isRolling)
-            return false;
-
         return isGrounded || jumpRemaining > 0;
     }
 
@@ -175,6 +181,12 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
             jumpRemaining = 2;
+
+            if (rollOnLand)
+            {
+                rollOnLand = false;
+                Roll();
+            }
         }
     }
 

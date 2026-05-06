@@ -251,7 +251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &84267933
 Transform:
   m_ObjectHideFlags: 0
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   firstJumpForce: 42
   doubleJumpForce: 30
-  acceleration: 3
+  acceleration: 20
   maxXVelocity: 100
   _groundCheckDistance: 0.06
   _groundCheckSize: {x: 2.68, y: 0.18}
