@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     public Vector2 velocity;
     [HideInInspector]
     public float distance = 0f;
+    [HideInInspector]
+    public int health = 3;
 
     private Vector2 startingPosition;
 
