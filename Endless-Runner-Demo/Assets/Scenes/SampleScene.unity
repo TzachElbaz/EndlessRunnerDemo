@@ -852,8 +852,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811999d4cbcab184fa5702415c07bda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  firstJumpForce: 42
-  doubleJumpForce: 30
+  firstJumpForce: 45
+  doubleJumpForce: 35
   acceleration: 3
   maxXVelocity: 20
   _groundCheckDistance: -0.13
