@@ -1,19 +1,13 @@
 fileFormatVersion: 2
-guid: 1affdb08fb797b94ebc0468b161446a5
+guid: 444ab9e96afad84429b4829c967e5ed8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5941063248479344454
-    second: Do a barrel roll_0
+      213: -4330608148790437355
+    second: big foot foot (1)_0
   - first:
-      213: -2069717148311738395
-    second: Do a barrel roll_1
-  - first:
-      213: 8786082776268458096
-    second: Do a barrel roll_2
-  - first:
-      213: -4548106157649987700
-    second: Do a barrel roll_3
+      213: -1868918792820267584
+    second: big foot foot (1)_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -84,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,93 +99,62 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Do a barrel roll_0
+      name: big foot foot (1)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 8
+        y: 37
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ab8a24ed37a1d8da0800000000000000
-      internalID: -5941063248479344454
+      spriteID: 51a1fed45d696e3c0800000000000000
+      internalID: -4330608148790437355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Do a barrel roll_1
+      name: big foot foot (1)_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 8
+        y: 5
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e7285d2833e643e0800000000000000
-      internalID: -2069717148311738395
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Do a barrel roll_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 078c8aefbbf6ee970800000000000000
-      internalID: 8786082776268458096
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Do a barrel roll_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c877188eb81e1e0c0800000000000000
-      internalID: -4548106157649987700
+      spriteID: 0c565e782444016e0800000000000000
+      internalID: -1868918792820267584
       vertices: []
       indices: 
       edges: []
@@ -200,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c81a9b1f2e2ffaf42b43e9f9478d99a7
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -208,14 +171,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Do a barrel roll_0: -5941063248479344454
-      Do a barrel roll_1: -2069717148311738395
-      Do a barrel roll_2: 8786082776268458096
-      Do a barrel roll_3: -4548106157649987700
+      big foot foot (1)_0: -4330608148790437355
+      big foot foot (1)_1: -1868918792820267584
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
