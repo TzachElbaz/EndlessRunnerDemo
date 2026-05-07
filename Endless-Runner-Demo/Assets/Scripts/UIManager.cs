@@ -18,14 +18,25 @@ public class UIManager : MonoBehaviour
         collectables = GameObject.FindAnyObjectByType<CollectablesManager>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            UpdateHearts(player.health);
-            Debug.Log(player.health);
-        }
+        Player.OnPlayerHit += UpdateHearts;
     }
+
+    private void OnDisable()
+    {
+        Player.OnPlayerHit -= UpdateHearts;
+
+    }
+
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Alpha1))
+    //    {
+    //        UpdateHearts(player.health);
+    //        Debug.Log(player.health);
+    //    }
+    //}
 
     private void FixedUpdate()
     {

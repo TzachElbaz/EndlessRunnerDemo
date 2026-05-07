@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RunGameManeger : MonoBehaviour
 {
+
     [SerializeField] private Player _Player;
     [SerializeField] private GameObject _PlayerObject;
     [SerializeField] private GameObject[] _forestObstecl;
@@ -13,6 +14,7 @@ public class RunGameManeger : MonoBehaviour
     [SerializeField] private float _Xspon;
     [SerializeField] private float _Yspon;
     [SerializeField] private int _obstacleCurseCount;
+
 
     private GameObject _LastObject;
     private int _obstacleCounter;
@@ -30,6 +32,18 @@ public class RunGameManeger : MonoBehaviour
     {
         FOREST,
         DESERT
+    }
+
+    private void OnEnable()
+    {
+        // Subscribe
+        Player.OnPlayerDied += ShowGameOver;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe
+        Player.OnPlayerDied -= ShowGameOver;
     }
 
     void Start()
@@ -107,5 +121,10 @@ public class RunGameManeger : MonoBehaviour
         }
         return true;
 
+    }
+
+    private void ShowGameOver()
+    {
+        Debug.Log("GAME OVER!");
     }
 }
