@@ -1,6 +1,8 @@
 
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class RunGameManeger : MonoBehaviour
 {
@@ -22,10 +24,19 @@ public class RunGameManeger : MonoBehaviour
 
 
     
-
     public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
+    [Header("alt generation")]
     GameObject[] _curentObstecl;
     GameObject[] _curentObsteclCours;
+    private int[] pregen ;
+    private float[] genLength;
+    private int listCount;
+    private bool _pregenEmpty;
+    [SerializeField] private float _jumpChaineLength;
+    [SerializeField] private float _dropChaineLength;
+    [SerializeField] private int _obstecalChainChance;
+    [SerializeField] private int _obsteclBrakeChance;
+    
 
     public bool _obstaclePause;
     public bool _generateAlt;
@@ -42,19 +53,23 @@ public class RunGameManeger : MonoBehaviour
     {
         switch (_curentScreen)
         {
-               
+
             case SCREEN_ENUM.FOREST:
                 _curentObstecl = _forestObstecl;
                 _curentObsteclCours = _forestObsteclCurse;
-            break;
+                break;
 
             case SCREEN_ENUM.DESERT:
-            _curentObstecl = _desertObstecl;
-            _curentObsteclCours = _desertObsteclCurse;
-            break;
+                _curentObstecl = _desertObstecl;
+                _curentObsteclCours = _desertObsteclCurse;
+                break;
         }
         _spawnPoint.y = _Yspon;
         _spawnPoint.x = _Xspon;
+        pregen = new int[_pregenLength];
+        genLength = new float[_pregenLength];
+        listCount = 0;
+        _pregenEmpty = true;
         GenerateOb();
 
     }
@@ -73,8 +88,9 @@ public class RunGameManeger : MonoBehaviour
         }
         else if (_generateAlt && SpawnCheckAlt()) 
         {
-            GenerateObAlt();
+            SpawnOB();         
         }
+        
     }
 
     private void GenerateOb()
@@ -105,21 +121,21 @@ public class RunGameManeger : MonoBehaviour
     {
         //int prevLast =1;
         int rund;
-        int repetCount = 0;
-        int[] pregen= new int[_pregenLength];
-        float[] genLength = new float [_pregenLength];
+        int repetCount = 0;      
         float length =_minLength;
+        Obstecl now;
+        Obstecl prev= _curentObstecl[pregen[pregen.Length-1]].GetComponent<Obstecl>();
         GameObject Ob;
-        for (int i = 0; i < pregen.Length; i++) 
+        for (int i = 0; i < pregen.Length; i++)
         {
             rund = Random.Range(0, _curentObstecl.Length);
-            if (rund == pregen[i - 1]) 
+            if (i > 0 && rund == pregen[i - 1])
             {
-                if(repetCount < 1) repetCount++;
+                if (repetCount < 1) repetCount++;
                 else
                 {
                     repetCount = 0;
-                    while(rund== pregen[i - 1])
+                    while (rund == pregen[i - 1])
                     {
                         rund = Random.Range(0, _curentObstecl.Length);
                     }
@@ -127,224 +143,31 @@ public class RunGameManeger : MonoBehaviour
 
             }
             pregen[i] = rund;
-            int chain = Random.Range(0, 3);
+            int randomObstacleEvent = Random.Range(0, 10);
             Ob = _curentObstecl[rund];
-            Obstecl now = Ob.GetComponent<Obstecl>();
-            Obstecl prev = _curentObstecl[pregen[i - 1]].GetComponent<Obstecl>();
-            if (chain == 0)
+            now = Ob.GetComponent<Obstecl>();
+            if (i != 0)
             {
-                switch (prev._passPoint)
-                {
-                    case Obstecl.PASS_POINT.UP:
-                        switch (now._passPoint)
-                        {
-                            case Obstecl.PASS_POINT.UP:
-                                length = _minLength + 5;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE:
-                                length = _minLength;
-                                break;
-
-                            case Obstecl.PASS_POINT.DOWN:
-                                length = 7;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_MIDDLE:
-                                length = _minLength;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_DOWN:
-                                length = _minLength;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE_DOWN:
-                                length = 7;
-                                break;
-
-
-                        }
-                        break;
-
-                    case Obstecl.PASS_POINT.MIDDLE:
-                        switch (now._passPoint)
-                        {
-                            case Obstecl.PASS_POINT.UP:
-                                length = 15;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE:
-                                length = _minLength;
-                                break;
-
-                            case Obstecl.PASS_POINT.DOWN:
-                                length = _minLength;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_MIDDLE:
-                                if (1 == Random.Range(0, 1)) length = _minLength;
-                                else length = 15;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_DOWN:
-                                if (1 == Random.Range(0, 1)) length = _minLength;
-                                else length = 15;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE_DOWN:
-                                if (1 == Random.Range(0, 1)) length = _minLength;
-                                else length = 5;
-                                break;
-
-
-                        }
-                        break;
-
-                    case Obstecl.PASS_POINT.DOWN:
-                        switch (now._passPoint)
-                        {
-                            case Obstecl.PASS_POINT.UP:
-                                length = _minLength / 2;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE:
-                                length = _minLength / 3;
-                                break;
-
-                            case Obstecl.PASS_POINT.DOWN:
-                                length = 5;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_MIDDLE:
-                                if (1 == Random.Range(0, 1)) length = _minLength / 2;
-                                else length = _minLength / 3;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_DOWN:
-                                if (1 == Random.Range(0, 1)) length = 10;
-                                else length = 5;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE_DOWN:
-                                if (1 == Random.Range(0, 1)) length = 5;
-                                else length = _minLength / 3; ;
-                                break;
-
-
-                        }
-                        break;
-
-                    case Obstecl.PASS_POINT.UP_MIDDLE:
-                        switch (now._passPoint)
-                        {
-                            case Obstecl.PASS_POINT.UP:
-                                if (1 == Random.Range(0, 1)) length = _minLength;
-                                else length = 5;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE:
-                                length = 15;
-                                break;
-
-                            case Obstecl.PASS_POINT.DOWN:
-                                length = 7;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_MIDDLE:
-                                if (1 == Random.Range(0, 1)) length = 7;
-                                else length = 15;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_DOWN:
-                                length = 7;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE_DOWN:
-                                length = _minLength;
-                                break;
-
-
-                        }
-                        break;
-
-                    case Obstecl.PASS_POINT.UP_DOWN:
-                        switch (now._passPoint)
-                        {
-                            case Obstecl.PASS_POINT.UP:
-                                length = _minLength / 2;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE:
-                                length = _minLength / 3;
-                                break;
-
-                            case Obstecl.PASS_POINT.DOWN:
-                                length = 7;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_MIDDLE:
-                                length = _minLength;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_DOWN:
-                                length = _minLength / 2;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE_DOWN:
-                                length = _minLength / 3;
-                                break;
-
-
-                        }
-                        break;
-
-                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
-                        switch (now._passPoint)
-                        {
-                            case Obstecl.PASS_POINT.UP:
-                                if (1 == Random.Range(0, 1)) length = 7;
-                                else length = 15;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE:
-                                length = _minLength;
-                                break;
-
-                            case Obstecl.PASS_POINT.DOWN:
-                                length = 7;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_MIDDLE:
-                                length = 7;
-                                break;
-
-                            case Obstecl.PASS_POINT.UP_DOWN:
-                                length = 7;
-                                break;
-
-                            case Obstecl.PASS_POINT.MIDDLE_DOWN:
-                                length = _minLength / 3;
-                                break;
-
-
-                        }
-                        break;
-
-
-                }
+                prev = _curentObstecl[pregen[i - 1]].GetComponent<Obstecl>();
             }
-            else 
+
+
+            if (randomObstacleEvent <= _obstecalChainChance)
             {
-                length = _minLength + _addLength;
+                length = TwoOBDistantCheck(prev, now);
             }
-            genLength[i] = length;
+            else if (randomObstacleEvent <= _obstecalChainChance+_obsteclBrakeChance)
+            {
+                length = _minLength * Random.Range(2, 5);
+            }
+            else
+            {
+                length = now._GenerateDistance;
 
-            
-
-
-
-
+            }
+                genLength[i] = length;
         }
+        _pregenEmpty = false;
 
 
     }
@@ -367,13 +190,236 @@ public class RunGameManeger : MonoBehaviour
     private bool SpawnCheckAlt()
     {
         if (_obstaclePause) return false;
+        if (_pregenEmpty)
+        {
+            GenerateObAlt();
+        }
+
         if (_LastObject != null)
         {
             float distans = _LastObject.transform.position.x;
-            float genDistans = _LastObject.GetComponent<Obstecl>()._GenerateDistance;
+            float genDistans = genLength[listCount];
             return (_spawnPoint.x - distans >= genDistans);
         }
+
         return true;
 
+    }
+
+    private void SpawnOB()
+    {
+        GameObject Ob;
+        Ob = Instantiate(_curentObstecl[pregen[listCount]]);
+        Ob.transform.position = new Vector2(_spawnPoint.x, _spawnPoint.y);
+        _LastObject = Ob;
+        listCount++;
+        if(pregen.Length <= listCount)
+        {
+            listCount = 0;
+            _pregenEmpty = true;
+        }
+    }
+    private float TwoOBDistantCheck(Obstecl OBa, Obstecl OBb)
+    {
+        float length = _minLength;
+        switch (OBa._passPoint)
+        {
+            case Obstecl.PASS_POINT.UP:
+                switch (OBb._passPoint)
+                {
+                    case Obstecl.PASS_POINT.UP:
+                        length = _minLength + _addLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.DOWN:
+                        length = _dropChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_DOWN:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                        length = _addLength+_dropChaineLength;
+                        break;
+
+
+                }
+                break;
+
+            case Obstecl.PASS_POINT.MIDDLE:
+                switch (OBb._passPoint)
+                {
+                    case Obstecl.PASS_POINT.UP:
+                        length = _jumpChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.DOWN:
+                        length = _dropChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                        if (1 == Random.Range(0, 2)) length = _jumpChaineLength;
+                        else length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_DOWN:
+                        length = _jumpChaineLength;                        
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                        if (1 == Random.Range(0, 2)) length = _addLength;
+                        else length = _dropChaineLength;
+                        break;
+
+
+                }
+                break;
+
+            case Obstecl.PASS_POINT.DOWN:
+                switch (OBb._passPoint)
+                {
+                    case Obstecl.PASS_POINT.UP:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE:
+                        length = _minLength ;
+                        break;
+
+                    case Obstecl.PASS_POINT.DOWN:
+                        length = _addLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                        if (1 == Random.Range(0, 2)) length = _minLength ;
+                        else length = _minLength +_addLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_DOWN:
+                        if (1 == Random.Range(0, 2)) length = _addLength;
+                        else length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                        if (1 == Random.Range(0, 2)) length = _addLength;
+                        else length = _minLength ;
+                        break;
+
+
+                }
+                break;
+
+            case Obstecl.PASS_POINT.UP_MIDDLE:
+                switch (OBb._passPoint)
+                {
+                    case Obstecl.PASS_POINT.UP:
+                        
+                       length = _jumpChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.DOWN:
+                        length = _dropChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                        if (1 == Random.Range(0, 2)) length = _minLength;
+                        else length = _jumpChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_DOWN:
+                        if (1 == Random.Range(0, 2)) length = _dropChaineLength;
+                        else length = _jumpChaineLength;
+                        
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                        length = _dropChaineLength+ _addLength;
+                        break;
+
+
+                }
+                break;
+
+            case Obstecl.PASS_POINT.UP_DOWN:
+                switch (OBb._passPoint)
+                {
+                    case Obstecl.PASS_POINT.UP:
+                        length = _minLength ;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE:
+                        length = _minLength ;
+                        break;
+
+                    case Obstecl.PASS_POINT.DOWN:
+                        length = _dropChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_DOWN:
+                        length = _minLength ;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                        length = _dropChaineLength;
+                        break;
+
+
+                }
+                break;
+
+            case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                switch (OBb._passPoint)
+                {
+                    case Obstecl.PASS_POINT.UP:
+                        if (1 == Random.Range(0, 2)) length = _jumpChaineLength;
+                        else length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE:
+                        length = _minLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.DOWN:
+                        length = _dropChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                        length = _jumpChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.UP_DOWN:
+                        length = _jumpChaineLength;
+                        break;
+
+                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                        length = _dropChaineLength;
+                        break;
+
+
+                }
+                break;
+        }
+        return length;
     }
 }
