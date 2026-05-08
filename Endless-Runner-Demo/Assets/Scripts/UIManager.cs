@@ -29,15 +29,6 @@ public class UIManager : MonoBehaviour
 
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Alpha1))
-    //    {
-    //        UpdateHearts(player.health);
-    //        Debug.Log(player.health);
-    //    }
-    //}
-
     private void FixedUpdate()
     {
         distanceText.text = Mathf.FloorToInt(player.distance) + " m";
