@@ -5,7 +5,6 @@ public class Collectables : MonoBehaviour
     CollectablesManager collectables;
     [SerializeField] private int _colectableId;   
     [SerializeField] SO_Collectable _so;
-    [SerializeField] Animator _animation;
     
    
 

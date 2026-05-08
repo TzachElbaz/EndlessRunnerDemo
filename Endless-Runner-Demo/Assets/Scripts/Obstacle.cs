@@ -1,12 +1,23 @@
 using UnityEngine;
 
-public class Obstecl : MonoBehaviour
+public class Obstacle : MonoBehaviour
 {
     [SerializeField] public bool _IsObsteclCourse;
     [SerializeField] public float _GenerateDistance;
     Player player;
     [SerializeField] private float depth = 1;
+    public PASS_POINT _passPoint;
 
+    public enum PASS_POINT
+    {
+        UP,
+        MIDDLE,
+        DOWN,
+        UP_MIDDLE,
+        UP_DOWN,
+        MIDDLE_DOWN,
+
+    }
     private void Awake()
     {
         player = GameObject.FindAnyObjectByType<Player>();
@@ -19,7 +30,12 @@ public class Obstecl : MonoBehaviour
 
         position.x -= realVelocity * Time.fixedDeltaTime;
 
-        if (position.x < -30) Destroy(gameObject);
+        if (position.x < -30 && !_IsObsteclCourse)
+        {
+            if(!_IsObsteclCourse) Destroy(gameObject);
+            else if(position.x < -60) Destroy(gameObject);
+        } 
+            
 
         transform.position = position;
     }

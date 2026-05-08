@@ -1,8 +1,14 @@
-using UnityEngine;
+using System;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static event Action<int> OnPlayerHit;
+    public static event Action OnPlayerDied;
+
+
     private Rigidbody2D _rigidbody;
     private Animator _animation;
     private BoxCollider2D _boxCollider;
@@ -38,6 +44,8 @@ public class Player : MonoBehaviour
     public Vector2 velocity;
     [HideInInspector]
     public float distance = 0f;
+    [HideInInspector]
+    public int health = 3;
 
     private Vector2 startingPosition;
 
@@ -186,6 +194,18 @@ public class Player : MonoBehaviour
             {
                 rollOnLand = false;
                 Roll();
+            }
+            return;
+        }
+
+        if (collision.gameObject.CompareTag("obstacle"))
+        {
+            if (health >= 1)
+            {
+                health -= 1;
+                OnPlayerHit?.Invoke(health);
+                if (health == 0)
+                    OnPlayerDied?.Invoke();
             }
         }
     }
