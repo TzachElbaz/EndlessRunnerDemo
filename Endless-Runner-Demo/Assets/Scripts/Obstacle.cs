@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Obstecl : MonoBehaviour
+public class Obstacle : MonoBehaviour
 {
     [SerializeField] public bool _IsObsteclCourse;
     [SerializeField] public float _GenerateDistance;

@@ -1,8 +1,4 @@
-
-
 using UnityEngine;
-
-
 public class RunGameManeger : MonoBehaviour
 {
     [SerializeField] private Player _Player;
@@ -40,7 +36,21 @@ public class RunGameManeger : MonoBehaviour
     public bool _obstaclePause;
     public bool _generateAlt;
 
-  
+    private void OnEnable()
+    {
+        // Subscribe
+        Player.OnPlayerDied += ShowGameOver;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe
+        Player.OnPlayerDied -= ShowGameOver;
+    }
+    private void ShowGameOver()
+    {
+        Debug.Log("GAME OVER!");
+    }
 
     public enum SCREEN_ENUM
     {
@@ -122,8 +132,8 @@ public class RunGameManeger : MonoBehaviour
         int rund;
         int repetCount = 0;      
         float length =_minLength;
-        Obstecl now;
-        Obstecl prev= _curentObstecl[pregen[pregen.Length-1]].GetComponent<Obstecl>();
+        Obstacle now;
+        Obstacle prev= _curentObstecl[pregen[pregen.Length-1]].GetComponent<Obstacle>();
         GameObject Ob;
         for (int i = 0; i < pregen.Length; i++)
         {
@@ -144,10 +154,10 @@ public class RunGameManeger : MonoBehaviour
             pregen[i] = rund;
             int randomObstacleEvent = Random.Range(0, 10);
             Ob = _curentObstecl[rund];
-            now = Ob.GetComponent<Obstecl>();
+            now = Ob.GetComponent<Obstacle>();
             if (i != 0)
             {
-                prev = _curentObstecl[pregen[i - 1]].GetComponent<Obstecl>();
+                prev = _curentObstecl[pregen[i - 1]].GetComponent<Obstacle>();
             }
 
 
@@ -180,7 +190,7 @@ public class RunGameManeger : MonoBehaviour
         if (_LastObject != null)
         {
             float distans = _LastObject.transform.position.x;
-            float genDistans = _LastObject.GetComponent<Obstecl>()._GenerateDistance;
+            float genDistans = _LastObject.GetComponent<Obstacle>()._GenerateDistance;
             return (_spawnPoint.x - distans >= genDistans);
         }
         return true;
@@ -218,35 +228,35 @@ public class RunGameManeger : MonoBehaviour
             _pregenEmpty = true;
         }
     }
-    private float TwoOBDistantCheck(Obstecl OBa, Obstecl OBb)
+    private float TwoOBDistantCheck(Obstacle OBa, Obstacle OBb)
     {
         float length = _minLength;
         switch (OBa._passPoint)
         {
-            case Obstecl.PASS_POINT.UP:
+            case Obstacle.PASS_POINT.UP:
                 switch (OBb._passPoint)
                 {
-                    case Obstecl.PASS_POINT.UP:
+                    case Obstacle.PASS_POINT.UP:
                         length = _minLength + _addLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE:
+                    case Obstacle.PASS_POINT.MIDDLE:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.DOWN:
+                    case Obstacle.PASS_POINT.DOWN:
                         length = _dropChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                    case Obstacle.PASS_POINT.UP_MIDDLE:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_DOWN:
+                    case Obstacle.PASS_POINT.UP_DOWN:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                    case Obstacle.PASS_POINT.MIDDLE_DOWN:
                         length = _addLength+_dropChaineLength;
                         break;
 
@@ -254,31 +264,31 @@ public class RunGameManeger : MonoBehaviour
                 }
                 break;
 
-            case Obstecl.PASS_POINT.MIDDLE:
+            case Obstacle.PASS_POINT.MIDDLE:
                 switch (OBb._passPoint)
                 {
-                    case Obstecl.PASS_POINT.UP:
+                    case Obstacle.PASS_POINT.UP:
                         length = _jumpChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE:
+                    case Obstacle.PASS_POINT.MIDDLE:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.DOWN:
+                    case Obstacle.PASS_POINT.DOWN:
                         length = _dropChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                    case Obstacle.PASS_POINT.UP_MIDDLE:
                         if (1 == Random.Range(0, 2)) length = _jumpChaineLength;
                         else length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_DOWN:
+                    case Obstacle.PASS_POINT.UP_DOWN:
                         length = _jumpChaineLength;                        
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                    case Obstacle.PASS_POINT.MIDDLE_DOWN:
                         if (1 == Random.Range(0, 2)) length = _addLength;
                         else length = _dropChaineLength;
                         break;
@@ -287,32 +297,32 @@ public class RunGameManeger : MonoBehaviour
                 }
                 break;
 
-            case Obstecl.PASS_POINT.DOWN:
+            case Obstacle.PASS_POINT.DOWN:
                 switch (OBb._passPoint)
                 {
-                    case Obstecl.PASS_POINT.UP:
+                    case Obstacle.PASS_POINT.UP:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE:
+                    case Obstacle.PASS_POINT.MIDDLE:
                         length = _minLength ;
                         break;
 
-                    case Obstecl.PASS_POINT.DOWN:
+                    case Obstacle.PASS_POINT.DOWN:
                         length = _addLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                    case Obstacle.PASS_POINT.UP_MIDDLE:
                         if (1 == Random.Range(0, 2)) length = _minLength ;
                         else length = _minLength +_addLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_DOWN:
+                    case Obstacle.PASS_POINT.UP_DOWN:
                         if (1 == Random.Range(0, 2)) length = _addLength;
                         else length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                    case Obstacle.PASS_POINT.MIDDLE_DOWN:
                         if (1 == Random.Range(0, 2)) length = _addLength;
                         else length = _minLength ;
                         break;
@@ -321,34 +331,34 @@ public class RunGameManeger : MonoBehaviour
                 }
                 break;
 
-            case Obstecl.PASS_POINT.UP_MIDDLE:
+            case Obstacle.PASS_POINT.UP_MIDDLE:
                 switch (OBb._passPoint)
                 {
-                    case Obstecl.PASS_POINT.UP:
+                    case Obstacle.PASS_POINT.UP:
                         
                        length = _jumpChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE:
+                    case Obstacle.PASS_POINT.MIDDLE:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.DOWN:
+                    case Obstacle.PASS_POINT.DOWN:
                         length = _dropChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                    case Obstacle.PASS_POINT.UP_MIDDLE:
                         if (1 == Random.Range(0, 2)) length = _minLength;
                         else length = _jumpChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_DOWN:
+                    case Obstacle.PASS_POINT.UP_DOWN:
                         if (1 == Random.Range(0, 2)) length = _dropChaineLength;
                         else length = _jumpChaineLength;
                         
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                    case Obstacle.PASS_POINT.MIDDLE_DOWN:
                         length = _dropChaineLength+ _addLength;
                         break;
 
@@ -356,30 +366,30 @@ public class RunGameManeger : MonoBehaviour
                 }
                 break;
 
-            case Obstecl.PASS_POINT.UP_DOWN:
+            case Obstacle.PASS_POINT.UP_DOWN:
                 switch (OBb._passPoint)
                 {
-                    case Obstecl.PASS_POINT.UP:
+                    case Obstacle.PASS_POINT.UP:
                         length = _minLength ;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE:
+                    case Obstacle.PASS_POINT.MIDDLE:
                         length = _minLength ;
                         break;
 
-                    case Obstecl.PASS_POINT.DOWN:
+                    case Obstacle.PASS_POINT.DOWN:
                         length = _dropChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                    case Obstacle.PASS_POINT.UP_MIDDLE:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_DOWN:
+                    case Obstacle.PASS_POINT.UP_DOWN:
                         length = _minLength ;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                    case Obstacle.PASS_POINT.MIDDLE_DOWN:
                         length = _dropChaineLength;
                         break;
 
@@ -387,31 +397,31 @@ public class RunGameManeger : MonoBehaviour
                 }
                 break;
 
-            case Obstecl.PASS_POINT.MIDDLE_DOWN:
+            case Obstacle.PASS_POINT.MIDDLE_DOWN:
                 switch (OBb._passPoint)
                 {
-                    case Obstecl.PASS_POINT.UP:
+                    case Obstacle.PASS_POINT.UP:
                         if (1 == Random.Range(0, 2)) length = _jumpChaineLength;
                         else length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE:
+                    case Obstacle.PASS_POINT.MIDDLE:
                         length = _minLength;
                         break;
 
-                    case Obstecl.PASS_POINT.DOWN:
+                    case Obstacle.PASS_POINT.DOWN:
                         length = _dropChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_MIDDLE:
+                    case Obstacle.PASS_POINT.UP_MIDDLE:
                         length = _jumpChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.UP_DOWN:
+                    case Obstacle.PASS_POINT.UP_DOWN:
                         length = _jumpChaineLength;
                         break;
 
-                    case Obstecl.PASS_POINT.MIDDLE_DOWN:
+                    case Obstacle.PASS_POINT.MIDDLE_DOWN:
                         length = _dropChaineLength;
                         break;
 
