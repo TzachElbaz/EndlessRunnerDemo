@@ -1,6 +1,8 @@
 using UnityEngine;
 public class RunGameManeger : MonoBehaviour
 {
+    public static bool isGamePaused = false;
+
     [SerializeField] private Player _Player;
     [SerializeField] private GameObject _PlayerObject;
     [SerializeField] private GameObject[] _forestObstecl;
@@ -18,12 +20,12 @@ public class RunGameManeger : MonoBehaviour
     private Vector2 _spawnPoint;
 
 
-    
+
     public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
     [Header("alt generation")]
     GameObject[] _curentObstecl;
     GameObject[] _curentObsteclCours;
-    private int[] pregen ;
+    private int[] pregen;
     private float[] genLength;
     private int listCount;
     private bool _pregenEmpty;
@@ -31,7 +33,7 @@ public class RunGameManeger : MonoBehaviour
     [SerializeField] private float _dropChaineLength;
     [SerializeField] private int _obstecalChainChance;
     [SerializeField] private int _obsteclBrakeChance;
-    
+
 
     public bool _obstaclePause;
     public bool _generateAlt;
@@ -83,23 +85,27 @@ public class RunGameManeger : MonoBehaviour
 
     }
 
-    
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            isGamePaused = !isGamePaused;
+        if(isGamePaused) return;
         TimeKiper();
     }
 
     private void FixedUpdate()
     {
+        if (isGamePaused) return;
         if (!_generateAlt && SpawnCheck())
         {
             GenerateOb();
         }
-        else if (_generateAlt && SpawnCheckAlt()) 
+        else if (_generateAlt && SpawnCheckAlt())
         {
-            SpawnOB();         
+            SpawnOB();
         }
-        
+
     }
 
     private void GenerateOb()
@@ -110,19 +116,19 @@ public class RunGameManeger : MonoBehaviour
         {
             rund = Random.Range(0, _curentObsteclCours.Length);
             Ob = Instantiate(_curentObsteclCours[rund]);
-            
-            _obstacleCounter =0;
+
+            _obstacleCounter = 0;
         }
         else
         {
 
             rund = Random.Range(0, _curentObstecl.Length);
             Ob = Instantiate(_curentObstecl[rund]);
-            _obstacleCounter ++;
+            _obstacleCounter++;
         }
         Ob.transform.position = new Vector2(_spawnPoint.x, _spawnPoint.y);
         _LastObject = Ob;
-        
+
 
     }
 
@@ -130,10 +136,10 @@ public class RunGameManeger : MonoBehaviour
     {
         //int prevLast =1;
         int rund;
-        int repetCount = 0;      
-        float length =_minLength;
+        int repetCount = 0;
+        float length = _minLength;
         Obstacle now;
-        Obstacle prev= _curentObstecl[pregen[pregen.Length-1]].GetComponent<Obstacle>();
+        Obstacle prev = _curentObstecl[pregen[pregen.Length - 1]].GetComponent<Obstacle>();
         GameObject Ob;
         for (int i = 0; i < pregen.Length; i++)
         {
@@ -165,7 +171,7 @@ public class RunGameManeger : MonoBehaviour
             {
                 length = TwoOBDistantCheck(prev, now);
             }
-            else if (randomObstacleEvent <= _obstecalChainChance+_obsteclBrakeChance)
+            else if (randomObstacleEvent <= _obstecalChainChance + _obsteclBrakeChance)
             {
                 length = _minLength * Random.Range(2, 5);
             }
@@ -174,7 +180,7 @@ public class RunGameManeger : MonoBehaviour
                 length = now._GenerateDistance;
 
             }
-                genLength[i] = length;
+            genLength[i] = length;
         }
         _pregenEmpty = false;
 
@@ -182,7 +188,7 @@ public class RunGameManeger : MonoBehaviour
     }
     private void TimeKiper()
     {
-        
+
     }
     private bool SpawnCheck()
     {
@@ -222,7 +228,7 @@ public class RunGameManeger : MonoBehaviour
         Ob.transform.position = new Vector2(_spawnPoint.x, _spawnPoint.y);
         _LastObject = Ob;
         listCount++;
-        if(pregen.Length <= listCount)
+        if (pregen.Length <= listCount)
         {
             listCount = 0;
             _pregenEmpty = true;
@@ -257,7 +263,7 @@ public class RunGameManeger : MonoBehaviour
                         break;
 
                     case Obstacle.PASS_POINT.MIDDLE_DOWN:
-                        length = _addLength+_dropChaineLength;
+                        length = _addLength + _dropChaineLength;
                         break;
 
 
@@ -285,7 +291,7 @@ public class RunGameManeger : MonoBehaviour
                         break;
 
                     case Obstacle.PASS_POINT.UP_DOWN:
-                        length = _jumpChaineLength;                        
+                        length = _jumpChaineLength;
                         break;
 
                     case Obstacle.PASS_POINT.MIDDLE_DOWN:
@@ -305,7 +311,7 @@ public class RunGameManeger : MonoBehaviour
                         break;
 
                     case Obstacle.PASS_POINT.MIDDLE:
-                        length = _minLength ;
+                        length = _minLength;
                         break;
 
                     case Obstacle.PASS_POINT.DOWN:
@@ -313,8 +319,8 @@ public class RunGameManeger : MonoBehaviour
                         break;
 
                     case Obstacle.PASS_POINT.UP_MIDDLE:
-                        if (1 == Random.Range(0, 2)) length = _minLength ;
-                        else length = _minLength +_addLength;
+                        if (1 == Random.Range(0, 2)) length = _minLength;
+                        else length = _minLength + _addLength;
                         break;
 
                     case Obstacle.PASS_POINT.UP_DOWN:
@@ -324,7 +330,7 @@ public class RunGameManeger : MonoBehaviour
 
                     case Obstacle.PASS_POINT.MIDDLE_DOWN:
                         if (1 == Random.Range(0, 2)) length = _addLength;
-                        else length = _minLength ;
+                        else length = _minLength;
                         break;
 
 
@@ -335,8 +341,8 @@ public class RunGameManeger : MonoBehaviour
                 switch (OBb._passPoint)
                 {
                     case Obstacle.PASS_POINT.UP:
-                        
-                       length = _jumpChaineLength;
+
+                        length = _jumpChaineLength;
                         break;
 
                     case Obstacle.PASS_POINT.MIDDLE:
@@ -355,11 +361,11 @@ public class RunGameManeger : MonoBehaviour
                     case Obstacle.PASS_POINT.UP_DOWN:
                         if (1 == Random.Range(0, 2)) length = _dropChaineLength;
                         else length = _jumpChaineLength;
-                        
+
                         break;
 
                     case Obstacle.PASS_POINT.MIDDLE_DOWN:
-                        length = _dropChaineLength+ _addLength;
+                        length = _dropChaineLength + _addLength;
                         break;
 
 
@@ -370,11 +376,11 @@ public class RunGameManeger : MonoBehaviour
                 switch (OBb._passPoint)
                 {
                     case Obstacle.PASS_POINT.UP:
-                        length = _minLength ;
+                        length = _minLength;
                         break;
 
                     case Obstacle.PASS_POINT.MIDDLE:
-                        length = _minLength ;
+                        length = _minLength;
                         break;
 
                     case Obstacle.PASS_POINT.DOWN:
@@ -386,7 +392,7 @@ public class RunGameManeger : MonoBehaviour
                         break;
 
                     case Obstacle.PASS_POINT.UP_DOWN:
-                        length = _minLength ;
+                        length = _minLength;
                         break;
 
                     case Obstacle.PASS_POINT.MIDDLE_DOWN:

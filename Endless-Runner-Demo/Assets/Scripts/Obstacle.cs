@@ -25,6 +25,8 @@ public class Obstacle : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(RunGameManeger.isGamePaused) return;
+
         float realVelocity = player.velocity.x / depth;
         Vector2 position = transform.position;
 

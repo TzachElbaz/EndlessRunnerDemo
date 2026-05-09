@@ -12,19 +12,10 @@ public class Collectables : MonoBehaviour
     {
         collectables = GameObject.FindAnyObjectByType<CollectablesManager>();      
     }
-    void Start()
-    {
-        
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
         collectables.SetCollectable(_colectableId);
         Destroy(gameObject);
-    }
-
-    void Update()
-    {
-        
     }
 }

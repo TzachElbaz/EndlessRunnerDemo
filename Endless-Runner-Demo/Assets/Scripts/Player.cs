@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     public static event Action<int> OnPlayerHit;
     public static event Action OnPlayerDied;
 
-
     private Rigidbody2D _rigidbody;
     private Animator _animation;
     private BoxCollider2D _boxCollider;
@@ -66,6 +65,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (RunGameManeger.isGamePaused)
+            return;
 
         HandleInput();
         PlayerAnimation();
@@ -78,6 +79,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (RunGameManeger.isGamePaused)
+            return;
 
         float velocityRatio = velocity.x / maxXVelocity;
         float currentAcceleration = acceleration * (1 - velocityRatio);

@@ -8,14 +8,5 @@ public class colectable_indicator : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
-    void Start()
-    {
-        
-    }
 
-    
-    void Update()
-    {
-        
-    }
 }

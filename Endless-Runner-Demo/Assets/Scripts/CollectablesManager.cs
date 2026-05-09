@@ -6,17 +6,7 @@ public class CollectablesManager : MonoBehaviour
     public int _coinCount;
     public bool[] _colectableList;
     [SerializeField] private Animator[] _anmation;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void SetCollectable(int id)
     {
         _colectableList[id] = true;
