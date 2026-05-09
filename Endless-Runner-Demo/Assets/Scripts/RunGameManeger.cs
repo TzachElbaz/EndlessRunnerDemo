@@ -90,8 +90,16 @@ public class RunGameManeger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             isGamePaused = !isGamePaused;
-        if(isGamePaused) return;
-        TimeKiper();
+        if (isGamePaused)
+        {
+            Time.timeScale = 0f;
+            return;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+            TimeKiper();
     }
 
     private void FixedUpdate()

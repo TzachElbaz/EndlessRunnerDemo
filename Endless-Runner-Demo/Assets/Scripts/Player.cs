@@ -65,8 +65,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (RunGameManeger.isGamePaused)
-            return;
+        //if (RunGameManeger.isGamePaused)
+        //    return;
 
         HandleInput();
         PlayerAnimation();
@@ -79,8 +79,8 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (RunGameManeger.isGamePaused)
-            return;
+        //if (RunGameManeger.isGamePaused)
+        //    return;
 
         float velocityRatio = velocity.x / maxXVelocity;
         float currentAcceleration = acceleration * (1 - velocityRatio);
