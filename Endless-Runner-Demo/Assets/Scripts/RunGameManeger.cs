@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,15 @@ public class RunGameManeger : MonoBehaviour
 
     [SerializeField] private Player _Player;
     [SerializeField] private GameObject _PlayerObject;
+    [SerializeField] private GameObject _forestBackground;
+    [SerializeField] private GameObject _desertBackground;
+    [SerializeField] private GameObject _desertTransition_1;
+    [SerializeField] private GameObject _desertTransition_2;
+    [SerializeField] private GameObject _desertTransition_3;
+    [SerializeField] private float _transitionTime;
+    [SerializeField] private float _transitionSwitch;
+    private float _transitionClock;
+    private bool _transitioning;
     [SerializeField] private GameObject[] _forestObstecl;
     [SerializeField] private GameObject[] _forestObsteclCurse;
     [SerializeField] private GameObject[] _desertObstecl;
@@ -54,6 +64,15 @@ public class RunGameManeger : MonoBehaviour
 
     private bool isGameOver = false;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     private void OnEnable()
     {
         // Subscribe
@@ -80,19 +99,7 @@ public class RunGameManeger : MonoBehaviour
 
     void Start()
     {
-        switch (_curentScreen)
-        {
-
-            case SCREEN_ENUM.FOREST:
-                _curentObstecl = _forestObstecl;
-                _curentObsteclCours = _forestObsteclCurse;
-                break;
-
-            case SCREEN_ENUM.DESERT:
-                _curentObstecl = _desertObstecl;
-                _curentObsteclCours = _desertObsteclCurse;
-                break;
-        }
+        SetObstacleToErea();
         _spawnPoint.y = _Yspon;
         _spawnPoint.x = _Xspon;
         pregen = new int[_pregenLength];
@@ -218,7 +225,30 @@ public class RunGameManeger : MonoBehaviour
     }
     private void TimeKiper()
     {
+        if (_transitioning)
+        {
+            if (_transitionClock == 0) _desertTransition_1.SetActive(true);
+            else if (_transitionClock >= _transitionSwitch && !_desertTransition_2.activeSelf)
+            {
+                
+                _desertTransition_2.SetActive(true);
+                CangeErea();
 
+
+            }
+
+            _transitionClock += Time.deltaTime;
+            
+            if ( _transitionClock >= _transitionTime)
+            {
+                _desertTransition_3.SetActive(true);
+                _desertTransition_2.SetActive(false);
+                //_desertTransition_3.SetActive(true);
+                _transitionClock = 0;
+                _transitioning = false;
+                _obstaclePause = false;
+            }
+        }
     }
     private bool SpawnCheck()
     {
@@ -491,12 +521,58 @@ public class RunGameManeger : MonoBehaviour
 #endif
     }
 
+    private void SetObstacleToErea()
+    {
+        switch (_curentScreen)
+        {
+
+            case SCREEN_ENUM.FOREST:
+                _curentObstecl = _forestObstecl;
+                _curentObsteclCours = _forestObsteclCurse;
+                break;
+
+            case SCREEN_ENUM.DESERT:
+                _curentObstecl = _desertObstecl;
+                _curentObsteclCours = _desertObsteclCurse;
+                break;
+        }
+    }
+
     public event Action OnChangeErea;
     public void InvokeCangeErea()
     {
-        _curentScreen = (SCREEN_ENUM)(((int)_curentScreen + 1) %System.Enum.GetValues(typeof(SCREEN_ENUM)).Length);
+
         _obstaclePause = true;
         ClearAllObstacles?.Invoke();
+        _transitioning = true;
+        
+
+    }
+    private void CangeErea()
+    {
+        switch (_curentScreen)
+        {
+            case SCREEN_ENUM.FOREST:
+                _forestBackground.SetActive(false);
+                break;
+            case SCREEN_ENUM.DESERT:
+                _desertBackground.SetActive(false);
+                break;
+
+        }
+        _curentScreen = (SCREEN_ENUM)(((int)_curentScreen + 1) % System.Enum.GetValues(typeof(SCREEN_ENUM)).Length);
        
+        switch (_curentScreen)
+        {
+            case SCREEN_ENUM.FOREST:
+                _forestBackground.SetActive(true);
+                break;
+            case SCREEN_ENUM.DESERT:
+                _desertBackground.SetActive(true);
+                break;
+
+        }
+        SetObstacleToErea();
+        GenerateObAlt();
     }
 }

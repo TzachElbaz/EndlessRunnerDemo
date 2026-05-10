@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 74a4d84807685a742be0601016e39187
+guid: f46a594cf6b637b44bcbed7ea40d1398
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 757484542963840450
-    second: Forest Layer 02_0
+      213: 7795127163939917970
+    second: desert transition_1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,12 +113,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Forest Layer 02_0
+      name: desert transition_1_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 43
         y: 0
-        width: 512
+        width: 469
         height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c57532bd20238a00800000000000000
-      internalID: 757484542963840450
+      spriteID: 29013a1fadadd2c60800000000000000
+      internalID: 7795127163939917970
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Forest Layer 02_0: 757484542963840450
+      desert transition_1_0: 7795127163939917970
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

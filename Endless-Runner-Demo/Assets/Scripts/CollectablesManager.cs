@@ -6,7 +6,7 @@ public class CollectablesManager : MonoBehaviour
     public int _coinCount;
     public bool[] _colectableList;
     [SerializeField] private Animator[] _anmation;
-
+    
     public void SetCollectable(int id)
     {
         _colectableList[id] = true;
@@ -20,11 +20,13 @@ public class CollectablesManager : MonoBehaviour
     }
     public void CollectableReset()
     {
+        
         for (int i = 0; i < _colectableList.Length; i++)
         {
             _colectableList[i] = false;
             _anmation[i].SetBool("isVisible", false);
         }
+        RunGameManeger.Instance.InvokeCangeErea();
     }
 
 }
