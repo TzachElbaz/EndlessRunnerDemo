@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df21e853c04fd84289635302620a40a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstecl
-  _IsObsteclCourse: 1
+  _IsObsteclCourse: 0
   _GenerateDistance: 100
   depth: 1
   _passPoint: 0
