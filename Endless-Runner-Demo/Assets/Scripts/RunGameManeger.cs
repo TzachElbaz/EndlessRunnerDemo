@@ -8,6 +8,12 @@ public class RunGameManeger : MonoBehaviour
     public static bool isGamePaused = false;
     public static event Action OnEscapePressed;
 
+    public static RunGameManeger Instance;
+
+    public static event Action ClearAllObstacles;
+    public static event Action ClearOffScreenObstacles;
+    public static event Action ClearOnScreenObstacles;
+
     [SerializeField] private Player _Player;
     [SerializeField] private GameObject _PlayerObject;
     [SerializeField] private GameObject[] _forestObstecl;
@@ -17,6 +23,10 @@ public class RunGameManeger : MonoBehaviour
     [SerializeField] private float _Xspon;
     [SerializeField] private float _Yspon;
     [SerializeField] private int _obstacleCurseCount;
+
+    public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
+
+    [Header("alt generation")]
     [SerializeField] private int _pregenLength;
     [SerializeField] private float _minLength;
     [SerializeField] private float _addLength;
@@ -25,9 +35,8 @@ public class RunGameManeger : MonoBehaviour
     private Vector2 _spawnPoint;
 
 
-
-    public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
-    [Header("alt generation")]
+    
+    
     GameObject[] _curentObstecl;
     GameObject[] _curentObsteclCours;
     private int[] pregen;
@@ -480,5 +489,14 @@ public class RunGameManeger : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    public event Action OnChangeErea;
+    public void InvokeCangeErea()
+    {
+        _curentScreen = (SCREEN_ENUM)(((int)_curentScreen + 1) %System.Enum.GetValues(typeof(SCREEN_ENUM)).Length);
+        _obstaclePause = true;
+        ClearAllObstacles?.Invoke();
+       
     }
 }

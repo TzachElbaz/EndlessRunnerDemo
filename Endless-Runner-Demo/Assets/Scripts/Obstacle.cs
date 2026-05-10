@@ -21,6 +21,9 @@ public class Obstacle : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindAnyObjectByType<Player>();
+        RunGameManeger.ClearAllObstacles += ClearAllObstacle;
+        RunGameManeger.ClearOffScreenObstacles += ClearOffScreenObstacles;
+        RunGameManeger.ClearOnScreenObstacles += ClearOnScreenObstacles;
     }
 
     private void FixedUpdate()
@@ -38,6 +41,27 @@ public class Obstacle : MonoBehaviour
             
 
         transform.position = position;
+    }
+
+    private void ClearAllObstacle()
+    {
+        RunGameManeger.ClearAllObstacles -= ClearAllObstacle;
+        Destroy(gameObject);
+    }
+    private void ClearOffScreenObstacles()
+    {
+        if (transform.position.x < 62) return;
+            RunGameManeger.ClearOffScreenObstacles -= ClearOffScreenObstacles;
+            Destroy(gameObject);
+        
+    }
+    private void ClearOnScreenObstacles()
+    {
+        if (transform.position.x > 66) return;
+        
+            RunGameManeger.ClearOnScreenObstacles -= ClearOnScreenObstacles;
+            Destroy(gameObject);
+        
     }
 
     private void OnDrawGizmos()

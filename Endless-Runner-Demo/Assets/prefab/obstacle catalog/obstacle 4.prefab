@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstecl
   _IsObsteclCourse: 0
-  _GenerateDistance: 20
+  _GenerateDistance: 25
   depth: 1
   _passPoint: 4
 --- !u!1 &1360896173567611921

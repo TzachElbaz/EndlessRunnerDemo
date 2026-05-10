@@ -202,6 +202,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("obstacle"))
         {
+            Debug.Log(collision.gameObject.GetComponentInParent<Obstacle>()._passPoint);
             Destroy(collision.gameObject);
             if (health >= 1)
             {
