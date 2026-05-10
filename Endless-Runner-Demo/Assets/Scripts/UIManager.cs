@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI distanceText;
     [SerializeField] TextMeshProUGUI moneyText;
+    [SerializeField] Canvas pauseMenu;
+    [SerializeField] Canvas gameOverScreen;
     [SerializeField] GameObject Heart1;
     [SerializeField] GameObject Heart2;
     [SerializeField] GameObject Heart3;
@@ -16,17 +18,22 @@ public class UIManager : MonoBehaviour
     {
         player = GameObject.FindAnyObjectByType<Player>();
         collectables = GameObject.FindAnyObjectByType<CollectablesManager>();
+        pauseMenu.enabled = false;
+        gameOverScreen.enabled = false;
     }
 
     private void OnEnable()
     {
         Player.OnPlayerHit += UpdateHearts;
+        Player.OnPlayerDied += ShowGameOverScreen;
+        RunGameManeger.OnEscapePressed += ShowPauseMenu;
     }
 
     private void OnDisable()
     {
         Player.OnPlayerHit -= UpdateHearts;
-
+        Player.OnPlayerDied -= ShowGameOverScreen;
+        RunGameManeger.OnEscapePressed -= ShowPauseMenu;
     }
 
     private void FixedUpdate()
@@ -67,6 +74,16 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void ShowPauseMenu()
+    {
+        pauseMenu.enabled = RunGameManeger.isGamePaused;
+    }
+
+    private void ShowGameOverScreen()
+    {
+        gameOverScreen.enabled = true;
     }
 
 }

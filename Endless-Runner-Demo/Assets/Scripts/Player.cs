@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
     [Header("Running")]
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float maxXVelocity = 100f;
-    //private float maxAcceleration = 10f;
 
     [Header("Collision")]
     [SerializeField] private float _groundCheckDistance = 0.1f;
@@ -65,22 +64,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        //if (RunGameManeger.isGamePaused)
-        //    return;
-
         HandleInput();
         PlayerAnimation();
-
-        if (transform.position.y < -3.45f)
-        {
-            ReturnToStart();
-        }
     }
 
     private void FixedUpdate()
     {
-        //if (RunGameManeger.isGamePaused)
-        //    return;
 
         float velocityRatio = velocity.x / maxXVelocity;
         float currentAcceleration = acceleration * (1 - velocityRatio);
@@ -213,6 +202,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("obstacle"))
         {
+            Destroy(collision.gameObject);
             if (health >= 1)
             {
                 health -= 1;
@@ -221,15 +211,6 @@ public class Player : MonoBehaviour
                     OnPlayerDied?.Invoke();
             }
         }
-    }
-
-    private void ReturnToStart()
-    {
-        Vector2 pos = transform.position;
-        pos.y = startingPosition.y + 20f;
-        transform.position = pos;
-
-        _rigidbody.linearVelocity = Vector2.zero;
     }
 
 }

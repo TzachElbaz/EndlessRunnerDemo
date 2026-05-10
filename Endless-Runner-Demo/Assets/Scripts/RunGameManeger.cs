@@ -1,7 +1,12 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
+
 public class RunGameManeger : MonoBehaviour
 {
     public static bool isGamePaused = false;
+    public static event Action OnEscapePressed;
 
     [SerializeField] private Player _Player;
     [SerializeField] private GameObject _PlayerObject;
@@ -38,6 +43,8 @@ public class RunGameManeger : MonoBehaviour
     public bool _obstaclePause;
     public bool _generateAlt;
 
+    private bool isGameOver = false;
+
     private void OnEnable()
     {
         // Subscribe
@@ -52,6 +59,8 @@ public class RunGameManeger : MonoBehaviour
     private void ShowGameOver()
     {
         Debug.Log("GAME OVER!");
+        Time.timeScale = 0f;
+        isGameOver = true;
     }
 
     public enum SCREEN_ENUM
@@ -88,8 +97,13 @@ public class RunGameManeger : MonoBehaviour
 
     void Update()
     {
+        if (isGameOver) return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             isGamePaused = !isGamePaused;
+            OnEscapePressed?.Invoke();
+        }
         if (isGamePaused)
         {
             Time.timeScale = 0f;
@@ -99,12 +113,11 @@ public class RunGameManeger : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-            TimeKiper();
+        TimeKiper();
     }
 
     private void FixedUpdate()
     {
-        if (isGamePaused) return;
         if (!_generateAlt && SpawnCheck())
         {
             GenerateOb();
@@ -444,5 +457,28 @@ public class RunGameManeger : MonoBehaviour
                 break;
         }
         return length;
+    }
+
+    public void ReloadScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    public void ResumeGame()
+    {
+        isGamePaused = false;
+        OnEscapePressed?.Invoke();
+        Time.timeScale = 1f;
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_STANDALONE
+        Application.Quit();
+#endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
