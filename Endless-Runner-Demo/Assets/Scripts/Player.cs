@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public int health = 3;
 
-    private Vector2 startingPosition;
 
     private void Awake()
     {
@@ -59,7 +58,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         SetColliders();
-        startingPosition = transform.position;
     }
 
     private void Update()
