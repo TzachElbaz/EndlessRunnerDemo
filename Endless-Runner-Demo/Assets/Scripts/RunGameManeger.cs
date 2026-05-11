@@ -18,10 +18,9 @@ public class RunGameManeger : MonoBehaviour
     [SerializeField] private Player _Player;
     [SerializeField] private GameObject _PlayerObject;
     [SerializeField] private GameObject _forestBackground;
+    [SerializeField] private GameObject[] _forestTransitionList;
     [SerializeField] private GameObject _desertBackground;
-    [SerializeField] private GameObject _desertTransition_1;
-    [SerializeField] private GameObject _desertTransition_2;
-    [SerializeField] private GameObject _desertTransition_3;
+    [SerializeField] private GameObject[] _desertTransitionList;
     [SerializeField] private float _transitionTime;
     [SerializeField] private float _transitionSwitch;
     private float _transitionClock;
@@ -35,6 +34,7 @@ public class RunGameManeger : MonoBehaviour
     [SerializeField] private int _obstacleCurseCount;
 
     public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
+    public SCREEN_ENUM _nextScreen;
 
     [Header("alt generation")]
     [SerializeField] private int _pregenLength;
@@ -227,27 +227,18 @@ public class RunGameManeger : MonoBehaviour
     {
         if (_transitioning)
         {
-            if (_transitionClock == 0) _desertTransition_1.SetActive(true);
-            else if (_transitionClock >= _transitionSwitch && !_desertTransition_2.activeSelf)
+            switch (_nextScreen)
             {
-                
-                _desertTransition_2.SetActive(true);
-                CangeErea();
 
+                case SCREEN_ENUM.FOREST:
+                    ForestTransition();
+                    break;
 
+                case SCREEN_ENUM.DESERT:
+                    DesertTransition();
+                    break;
             }
-
-            _transitionClock += Time.deltaTime;
             
-            if ( _transitionClock >= _transitionTime)
-            {
-                _desertTransition_3.SetActive(true);
-                _desertTransition_2.SetActive(false);
-                //_desertTransition_3.SetActive(true);
-                _transitionClock = 0;
-                _transitioning = false;
-                _obstaclePause = false;
-            }
         }
     }
     private bool SpawnCheck()
@@ -538,13 +529,16 @@ public class RunGameManeger : MonoBehaviour
         }
     }
 
-    public event Action OnChangeErea;
+    public static event Action OnChangeErea;
     public void InvokeCangeErea()
     {
+        _nextScreen = (SCREEN_ENUM)(((int)_curentScreen + 1) % System.Enum.GetValues(typeof(SCREEN_ENUM)).Length);
 
         _obstaclePause = true;
         ClearAllObstacles?.Invoke();
         _transitioning = true;
+        OnChangeErea?.Invoke();
+        
         
 
     }
@@ -560,8 +554,9 @@ public class RunGameManeger : MonoBehaviour
                 break;
 
         }
-        _curentScreen = (SCREEN_ENUM)(((int)_curentScreen + 1) % System.Enum.GetValues(typeof(SCREEN_ENUM)).Length);
-       
+        _curentScreen = _nextScreen;
+
+
         switch (_curentScreen)
         {
             case SCREEN_ENUM.FOREST:
@@ -574,5 +569,55 @@ public class RunGameManeger : MonoBehaviour
         }
         SetObstacleToErea();
         GenerateObAlt();
+    }
+    private void ForestTransition()
+    {
+        
+        if (_transitionClock == 0) _forestTransitionList[1].SetActive(true);
+        else if (_transitionClock >= _transitionSwitch && !_forestTransitionList[2].activeSelf)
+        {
+
+            _forestTransitionList[2].SetActive(true);
+            CangeErea();
+
+
+        }
+
+        _transitionClock += Time.deltaTime;
+
+        if (_transitionClock >= _transitionTime)
+        {
+            _forestTransitionList[3].SetActive(true);
+            _forestTransitionList[2].SetActive(false);
+            //_desertTransition_3.SetActive(true);
+            _transitionClock = 0;
+            _transitioning = false;
+            _obstaclePause = false;
+        }
+    }
+    private void DesertTransition()
+    {
+        
+        if (_transitionClock == 0) _desertTransitionList[1].SetActive(true);
+        else if (_transitionClock >= _transitionSwitch && !_desertTransitionList[2].activeSelf)
+        {
+
+            _desertTransitionList[2].SetActive(true);
+            CangeErea();
+
+
+        }
+
+        _transitionClock += Time.deltaTime;
+
+        if (_transitionClock >= _transitionTime)
+        {
+            _desertTransitionList[3].SetActive(true);
+            _desertTransitionList[2].SetActive(false);
+            //_desertTransition_3.SetActive(true);
+            _transitionClock = 0;
+            _transitioning = false;
+            _obstaclePause = false;
+        }
     }
 }

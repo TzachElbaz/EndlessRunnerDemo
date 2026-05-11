@@ -45,6 +45,8 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public float distance = 0f;
     [HideInInspector]
+    public float _collectableSpawnClock;
+    [HideInInspector]
     public int health = 3;
 
     private Vector2 startingPosition;
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
         velocity.x = Mathf.Min(velocity.x, maxXVelocity);
 
         distance += velocity.x * Time.fixedDeltaTime;
+        _collectableSpawnClock += velocity.x * Time.fixedDeltaTime;
     }
 
     private void HandleInput()
