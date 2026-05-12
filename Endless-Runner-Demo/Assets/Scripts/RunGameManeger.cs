@@ -58,7 +58,6 @@ public class RunGameManeger : MonoBehaviour
     }
     private void ShowGameOver()
     {
-        Debug.Log("GAME OVER!");
         Time.timeScale = 0f;
         isGameOver = true;
     }

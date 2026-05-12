@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float fastFallVelocity = 40f;
     private bool isRolling = false;
     private bool isGrounded;
+    private bool isDoubleJumping = false;
     private bool rollOnLand = false;
 
     [HideInInspector]
@@ -109,6 +110,9 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         jumpRemaining -= 1;
+        if (jumpRemaining == 0)
+            isDoubleJumping = true;
+        
         float jumpingForce = jumpRemaining == 1 ? firstJumpForce : doubleJumpForce;
         _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, 0f);
         _rigidbody.AddForce(Vector2.up * jumpingForce, ForceMode2D.Impulse);
@@ -136,6 +140,7 @@ public class Player : MonoBehaviour
     {
         _animation.SetBool("isRolling", isRolling);
         _animation.SetBool("isGrounded", isGrounded);
+        _animation.SetBool("isDoubleJumping", isDoubleJumping);
     }
 
     private void Roll()
@@ -182,6 +187,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") && GroundCheck())
         {
             isGrounded = true;
+            isDoubleJumping = false;
             jumpRemaining = 2;
             if (!isRolling)
             {
