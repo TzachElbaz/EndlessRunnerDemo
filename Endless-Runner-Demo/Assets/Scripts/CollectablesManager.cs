@@ -29,6 +29,7 @@ public class CollectablesManager : MonoBehaviour
         if(player._collectableSpawnClock >= _collectableSpawnDistant)
         {
             _isCollectableAvalable = true;
+            player._collectableSpawnClock = 0f;
         }
     }
     public void SetCollectable(int id)
