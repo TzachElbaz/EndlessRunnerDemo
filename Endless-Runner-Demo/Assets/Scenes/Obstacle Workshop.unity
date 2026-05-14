@@ -927,6 +927,7 @@ MonoBehaviour:
   fastFallVelocity: 40
   velocity: {x: 0, y: 0}
   distance: 0
+  health: 3
 --- !u!50 &1433486002
 Rigidbody2D:
   serializedVersion: 5
@@ -1155,6 +1156,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   distanceText: {fileID: 0}
   moneyText: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  gameOverScreen: {fileID: 0}
+  Heart1: {fileID: 0}
+  Heart2: {fileID: 0}
+  Heart3: {fileID: 0}
 --- !u!114 &1478693075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1593,11 +1599,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9097789441426670673, guid: 62151012c58657542806a99eab8e333e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -64.8
+      value: 13.7
       objectReference: {fileID: 0}
     - target: {fileID: 9097789441426670673, guid: 62151012c58657542806a99eab8e333e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.3
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 9097789441426670673, guid: 62151012c58657542806a99eab8e333e, type: 3}
       propertyPath: m_LocalPosition.z

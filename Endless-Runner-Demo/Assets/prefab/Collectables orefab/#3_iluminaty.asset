@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fa9761e2f1d76940bc68668b2c8c9c8, type: 3}
+  m_Name: '#3_iluminaty'
+  m_EditorClassIdentifier: Assembly-CSharp::SO_Collectable
+  _colectableId: 3
+  _zone: 1
+  _sprite: {fileID: 9216303713958627330, guid: fb43328a6b2727f4d81125f65d0c3629, type: 3}

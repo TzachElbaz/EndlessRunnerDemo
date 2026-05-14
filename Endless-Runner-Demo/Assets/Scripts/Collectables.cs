@@ -1,16 +1,48 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Collectables : MonoBehaviour
 {
     CollectablesManager collectables;
-    [SerializeField] private int _colectableId;   
+    RunGameManeger _runGameManager;
+    [SerializeField, HideInInspector] private int _colectableId;   
     [SerializeField] SO_Collectable _so;
+    [SerializeField, HideInInspector] public SO_Collectable.SCREEN_COL _zone;
+    [SerializeField, HideInInspector] private Sprite _sprite;
     
-   
+
 
     private void Awake()
     {
-        collectables = GameObject.FindAnyObjectByType<CollectablesManager>();      
+        _runGameManager = GameObject.FindAnyObjectByType<RunGameManeger>();
+        collectables = GameObject.FindAnyObjectByType<CollectablesManager>();
+        if(!collectables._isCollectableAvalable) Destroy(gameObject);
+        int random = Random.Range(0,4);
+        while (collectables._colectableList[random])
+        {
+            random++;
+            if(random >= collectables._colectableList.Length)
+            {
+                random = 0;
+            }
+        }
+        switch (_runGameManager._curentScreen)
+        {
+            case RunGameManeger.SCREEN_ENUM.FOREST:
+                _so = collectables._soForestCollectableList[random];
+                break;
+            case RunGameManeger.SCREEN_ENUM.DESERT:
+                _so = collectables._soDesertCollectableList[random];
+                break;
+        }
+        
+        _colectableId = _so._colectableId;
+        _zone = _so._zone;
+        _sprite = _so._sprite;
+        GetComponentInChildren<SpriteRenderer>().sprite= _sprite;
+        
+
+        collectables._isCollectableAvalable = false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,4 +50,5 @@ public class Collectables : MonoBehaviour
         collectables.SetCollectable(_colectableId);
         Destroy(gameObject);
     }
+    
 }
