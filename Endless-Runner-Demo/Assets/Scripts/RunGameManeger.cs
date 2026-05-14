@@ -1,5 +1,7 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -8,8 +10,22 @@ public class RunGameManeger : MonoBehaviour
     public static bool isGamePaused = false;
     public static event Action OnEscapePressed;
 
+    public static RunGameManeger Instance;
+
+    public static event Action ClearAllObstacles;
+    public static event Action ClearOffScreenObstacles;
+    public static event Action ClearOnScreenObstacles;
+
     [SerializeField] private Player _Player;
     [SerializeField] private GameObject _PlayerObject;
+    [SerializeField] private GameObject _forestBackground;
+    [SerializeField] private GameObject[] _forestTransitionList;
+    [SerializeField] private GameObject _desertBackground;
+    [SerializeField] private GameObject[] _desertTransitionList;
+    [SerializeField] private float _transitionTime;
+    [SerializeField] private float _transitionSwitch;
+    private float _transitionClock;
+    private bool _transitioning;
     [SerializeField] private GameObject[] _forestObstecl;
     [SerializeField] private GameObject[] _forestObsteclCurse;
     [SerializeField] private GameObject[] _desertObstecl;
@@ -17,6 +33,11 @@ public class RunGameManeger : MonoBehaviour
     [SerializeField] private float _Xspon;
     [SerializeField] private float _Yspon;
     [SerializeField] private int _obstacleCurseCount;
+
+    public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
+    public SCREEN_ENUM _nextScreen;
+
+    [Header("alt generation")]
     [SerializeField] private int _pregenLength;
     [SerializeField] private float _minLength;
     [SerializeField] private float _addLength;
@@ -25,9 +46,8 @@ public class RunGameManeger : MonoBehaviour
     private Vector2 _spawnPoint;
 
 
-
-    public SCREEN_ENUM _curentScreen = SCREEN_ENUM.FOREST;
-    [Header("alt generation")]
+    
+    
     GameObject[] _curentObstecl;
     GameObject[] _curentObsteclCours;
     private int[] pregen;
@@ -45,6 +65,15 @@ public class RunGameManeger : MonoBehaviour
 
     private bool isGameOver = false;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     private void OnEnable()
     {
         // Subscribe
@@ -70,26 +99,14 @@ public class RunGameManeger : MonoBehaviour
 
     void Start()
     {
-        switch (_curentScreen)
-        {
-
-            case SCREEN_ENUM.FOREST:
-                _curentObstecl = _forestObstecl;
-                _curentObsteclCours = _forestObsteclCurse;
-                break;
-
-            case SCREEN_ENUM.DESERT:
-                _curentObstecl = _desertObstecl;
-                _curentObsteclCours = _desertObsteclCurse;
-                break;
-        }
+        SetObstacleToErea();
         _spawnPoint.y = _Yspon;
         _spawnPoint.x = _Xspon;
         pregen = new int[_pregenLength];
         genLength = new float[_pregenLength];
         listCount = 0;
         _pregenEmpty = true;
-        GenerateOb();
+        
 
     }
 
@@ -208,7 +225,21 @@ public class RunGameManeger : MonoBehaviour
     }
     private void TimeKiper()
     {
+        if (_transitioning)
+        {
+            switch (_nextScreen)
+            {
 
+                case SCREEN_ENUM.FOREST:
+                    ForestTransition();
+                    break;
+
+                case SCREEN_ENUM.DESERT:
+                    DesertTransition();
+                    break;
+            }
+            
+        }
     }
     private bool SpawnCheck()
     {
@@ -479,5 +510,129 @@ public class RunGameManeger : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    private void SetObstacleToErea()
+    {
+        switch (_curentScreen)
+        {
+
+            case SCREEN_ENUM.FOREST:
+                _curentObstecl = _forestObstecl;
+                _curentObsteclCours = _forestObsteclCurse;
+                break;
+
+            case SCREEN_ENUM.DESERT:
+                _curentObstecl = _desertObstecl;
+                _curentObsteclCours = _desertObsteclCurse;
+                break;
+        }
+    }
+
+    public static event Action OnChangeErea;
+    public void InvokeCangeErea()
+    {
+        _nextScreen = (SCREEN_ENUM)(((int)_curentScreen + 1) % System.Enum.GetValues(typeof(SCREEN_ENUM)).Length);
+
+        _obstaclePause = true;
+        ClearAllObstacles?.Invoke();
+        _transitioning = true;
+        OnChangeErea?.Invoke();
+        
+        
+
+    }
+    private void CangeErea()
+    {
+        switch (_curentScreen)
+        {
+            case SCREEN_ENUM.FOREST:
+                _forestBackground.SetActive(false);
+                break;
+            case SCREEN_ENUM.DESERT:
+                _desertBackground.SetActive(false);
+                break;
+
+        }
+        _curentScreen = _nextScreen;
+
+
+        switch (_curentScreen)
+        {
+            case SCREEN_ENUM.FOREST:
+                _forestBackground.SetActive(true);
+                break;
+            case SCREEN_ENUM.DESERT:
+                _desertBackground.SetActive(true);
+                break;
+
+        }
+        SetObstacleToErea();
+        GenerateObAlt();
+    }
+    private void ForestTransition()
+    {
+
+        if (_transitionClock == 0)
+        {
+
+            _forestTransitionList[1].SetActive(true);
+            _forestTransitionList[1].transform.position = _forestTransitionList[1].GetComponent<ereaBackgroundTransition>()._startLocation;
+
+        }
+        else if (_transitionClock >= _transitionSwitch && !_forestTransitionList[2].activeSelf)
+        {
+
+            _forestTransitionList[2].SetActive(true);
+            CangeErea();
+
+
+        }
+
+        _transitionClock += Time.deltaTime;
+
+        if (_transitionClock >= _transitionTime)
+        {
+            _forestTransitionList[3].SetActive(true);
+            _forestTransitionList[3].transform.position = _forestTransitionList[3].GetComponent<ereaBackgroundTransition>()._startLocation;
+            _forestTransitionList[2].SetActive(false);
+            //_desertTransition_3.SetActive(true);
+            _transitionClock = 0;
+            _transitioning = false;
+            _obstaclePause = false;
+        }
+    }
+    private void DesertTransition()
+    {
+
+        if (_transitionClock == 0)
+        { 
+
+            _desertTransitionList[1].SetActive(true);
+            _desertTransitionList[1].transform.position = _desertTransitionList[1].GetComponent<ereaBackgroundTransition>()._startLocation;
+
+        }
+        else if (_transitionClock >= _transitionSwitch && !_desertTransitionList[2].activeSelf)
+        {
+
+            _desertTransitionList[2].SetActive(true);
+            CangeErea();
+
+
+        }
+
+        _transitionClock += Time.deltaTime;
+
+        if (_transitionClock >= _transitionTime)
+        {
+            _desertTransitionList[3].SetActive(true);
+            _desertTransitionList[3].transform.position = _desertTransitionList[3].GetComponent<ereaBackgroundTransition>()._startLocation;
+            _desertTransitionList[2].SetActive(false);
+            //_desertTransition_3.SetActive(true);
+            
+            _transitioning = false;
+            _obstaclePause = false;
+            _transitionClock = 0;
+        }
     }
 }
