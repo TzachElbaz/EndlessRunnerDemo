@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
@@ -105,7 +106,7 @@ public class RunGameManeger : MonoBehaviour
         genLength = new float[_pregenLength];
         listCount = 0;
         _pregenEmpty = true;
-        GenerateOb();
+        
 
     }
 
@@ -571,8 +572,14 @@ public class RunGameManeger : MonoBehaviour
     }
     private void ForestTransition()
     {
-        
-        if (_transitionClock == 0) _forestTransitionList[1].SetActive(true);
+
+        if (_transitionClock == 0)
+        {
+
+            _forestTransitionList[1].SetActive(true);
+            _forestTransitionList[1].transform.position = _forestTransitionList[1].GetComponent<ereaBackgroundTransition>()._startLocation;
+
+        }
         else if (_transitionClock >= _transitionSwitch && !_forestTransitionList[2].activeSelf)
         {
 
@@ -587,6 +594,7 @@ public class RunGameManeger : MonoBehaviour
         if (_transitionClock >= _transitionTime)
         {
             _forestTransitionList[3].SetActive(true);
+            _forestTransitionList[3].transform.position = _forestTransitionList[3].GetComponent<ereaBackgroundTransition>()._startLocation;
             _forestTransitionList[2].SetActive(false);
             //_desertTransition_3.SetActive(true);
             _transitionClock = 0;
@@ -596,8 +604,14 @@ public class RunGameManeger : MonoBehaviour
     }
     private void DesertTransition()
     {
-        
-        if (_transitionClock == 0) _desertTransitionList[1].SetActive(true);
+
+        if (_transitionClock == 0)
+        { 
+
+            _desertTransitionList[1].SetActive(true);
+            _desertTransitionList[1].transform.position = _desertTransitionList[1].GetComponent<ereaBackgroundTransition>()._startLocation;
+
+        }
         else if (_transitionClock >= _transitionSwitch && !_desertTransitionList[2].activeSelf)
         {
 
@@ -612,11 +626,13 @@ public class RunGameManeger : MonoBehaviour
         if (_transitionClock >= _transitionTime)
         {
             _desertTransitionList[3].SetActive(true);
+            _desertTransitionList[3].transform.position = _desertTransitionList[3].GetComponent<ereaBackgroundTransition>()._startLocation;
             _desertTransitionList[2].SetActive(false);
             //_desertTransition_3.SetActive(true);
-            _transitionClock = 0;
+            
             _transitioning = false;
             _obstaclePause = false;
+            _transitionClock = 0;
         }
     }
 }

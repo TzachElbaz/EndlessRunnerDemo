@@ -757,7 +757,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc1419c124e542f49a1690cbbf342136, type: 2}
   - {fileID: 11400000, guid: c90fd14a5f1c47c439bcdf99079bd0ad, type: 2}
   - {fileID: 11400000, guid: 05110fec862c2344c835923730f337d0, type: 2}
-  _collectableSpawnDistant: 200
+  _collectableSpawnDistant: 400
   _isCollectableAvalable: 0
 --- !u!1 &85698162
 GameObject:
@@ -1819,7 +1819,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -2527,6 +2527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ereaBackgroundTransition
   depth: 0.5
+  _startLocation: {x: 0, y: 0}
 --- !u!1 &437715608
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,7 +2553,7 @@ RectTransform:
   m_GameObject: {fileID: 437715608}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.0840063, y: 3.0840063, z: 3.0840063}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 939862647}
@@ -2561,9 +2562,9 @@ RectTransform:
   - {fileID: 4553538}
   m_Father: {fileID: 318327774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -245.9, y: 217.4}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -50, y: -110}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &507179540
@@ -3307,6 +3308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ereaBackgroundTransition
   depth: 0.5
+  _startLocation: {x: 0, y: 0}
 --- !u!1 &770371865 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 510259636599525449, guid: d9f5663f3321c5c498d689fdad512261, type: 3}
@@ -3481,14 +3483,14 @@ RectTransform:
   m_GameObject: {fileID: 798566014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.9882236, y: 2.9882236, z: 2.9882236}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 318327774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 117, y: -49}
+  m_AnchoredPosition: {x: 343, y: -78}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &798566016
@@ -3546,7 +3548,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -3616,7 +3618,7 @@ RectTransform:
   m_GameObject: {fileID: 841096896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.053448, y: 4.053448, z: 4.053448}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 770371866}
@@ -3626,7 +3628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25, y: -71.8}
+  m_AnchoredPosition: {x: 93, y: -172}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &920956762
@@ -4725,14 +4727,14 @@ RectTransform:
   m_GameObject: {fileID: 1221741104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.791466, y: 2.791466, z: 2.791466}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 318327774}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -17, y: -28}
+  m_AnchoredPosition: {x: -62, y: -86}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1221741106
@@ -5217,6 +5219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ereaBackgroundTransition
   depth: 0.5
+  _startLocation: {x: 0, y: 0}
 --- !u!1 &1486297635
 GameObject:
   m_ObjectHideFlags: 0
@@ -6673,6 +6676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ereaBackgroundTransition
   depth: 0.5
+  _startLocation: {x: 0, y: 0}
 --- !u!1 &2055370266
 GameObject:
   m_ObjectHideFlags: 0

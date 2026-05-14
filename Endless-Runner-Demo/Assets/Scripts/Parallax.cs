@@ -4,6 +4,8 @@ public class Parallax : MonoBehaviour
 {
     Player player;
     [SerializeField] private float depth = 1;
+    [SerializeField] private float destroy = -30;
+    [SerializeField] private float spawn = 75;
 
     private void Awake()
     {
@@ -17,8 +19,8 @@ public class Parallax : MonoBehaviour
 
         position.x -= realVelocity * Time.fixedDeltaTime;
 
-        if(position.x < -30)
-            position.x = 75;
+        if(position.x < destroy)
+            position.x = spawn;
 
         transform.position = position;
     }
