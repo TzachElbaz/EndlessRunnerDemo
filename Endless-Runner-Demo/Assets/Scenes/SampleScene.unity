@@ -263,6 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 10
+  destroy: -30
+  spawn: 75
 --- !u!212 &28481402
 SpriteRenderer:
   serializedVersion: 2
@@ -368,6 +370,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 10
+  destroy: -30
+  spawn: 75
 --- !u!212 &28807905
 SpriteRenderer:
   serializedVersion: 2
@@ -758,6 +762,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c90fd14a5f1c47c439bcdf99079bd0ad, type: 2}
   - {fileID: 11400000, guid: 05110fec862c2344c835923730f337d0, type: 2}
   _collectableSpawnDistant: 400
+  _transitionTime: 2
   _isCollectableAvalable: 0
 --- !u!1 &85698162
 GameObject:
@@ -1071,6 +1076,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 10
+  destroy: -30
+  spawn: 75
 --- !u!212 &142118160
 SpriteRenderer:
   serializedVersion: 2
@@ -1176,6 +1183,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 3
+  destroy: -30
+  spawn: 75
 --- !u!212 &143112633
 SpriteRenderer:
   serializedVersion: 2
@@ -1497,6 +1506,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 5
+  destroy: -30
+  spawn: 75
 --- !u!212 &192473661
 SpriteRenderer:
   serializedVersion: 2
@@ -1602,6 +1613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 10
+  destroy: -30
+  spawn: 75
 --- !u!212 &219469004
 SpriteRenderer:
   serializedVersion: 2
@@ -1707,6 +1720,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 3
+  destroy: -30
+  spawn: 75
 --- !u!212 &231788616
 SpriteRenderer:
   serializedVersion: 2
@@ -2000,6 +2015,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 3
+  destroy: -30
+  spawn: 75
 --- !u!212 &320935131
 SpriteRenderer:
   serializedVersion: 2
@@ -2302,6 +2319,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 1
+  destroy: -30
+  spawn: 75
 --- !u!61 &366300182
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3677,6 +3696,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 5
+  destroy: -30
+  spawn: 75
 --- !u!212 &920956765
 SpriteRenderer:
   serializedVersion: 2
@@ -4159,6 +4180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 1
+  destroy: -30
+  spawn: 75
 --- !u!1 &1102437235
 GameObject:
   m_ObjectHideFlags: 0
@@ -4205,6 +4228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 3
+  destroy: -30
+  spawn: 75
 --- !u!212 &1102437238
 SpriteRenderer:
   serializedVersion: 2
@@ -4310,6 +4335,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 10
+  destroy: -30
+  spawn: 75
 --- !u!212 &1104745073
 SpriteRenderer:
   serializedVersion: 2
@@ -4441,6 +4468,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 1
+  destroy: -30
+  spawn: 75
 --- !u!61 &1180606759
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4607,6 +4636,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 5
+  destroy: -30
+  spawn: 75
 --- !u!212 &1201934016
 SpriteRenderer:
   serializedVersion: 2
@@ -4883,6 +4914,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 3
+  destroy: -30
+  spawn: 75
 --- !u!212 &1379409940
 SpriteRenderer:
   serializedVersion: 2
@@ -5300,6 +5333,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 5
+  destroy: -30
+  spawn: 75
 --- !u!212 &1490745096
 SpriteRenderer:
   serializedVersion: 2
@@ -6194,6 +6229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 10
+  destroy: -30
+  spawn: 75
 --- !u!212 &1784834744
 SpriteRenderer:
   serializedVersion: 2
@@ -6299,6 +6336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 5
+  destroy: -30
+  spawn: 75
 --- !u!212 &1850167115
 SpriteRenderer:
   serializedVersion: 2
@@ -6512,6 +6551,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 3
+  destroy: -30
+  spawn: 75
 --- !u!212 &1955870116
 SpriteRenderer:
   serializedVersion: 2
@@ -6723,6 +6764,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parallax
   depth: 5
+  destroy: -30
+  spawn: 75
 --- !u!212 &2055370269
 SpriteRenderer:
   serializedVersion: 2

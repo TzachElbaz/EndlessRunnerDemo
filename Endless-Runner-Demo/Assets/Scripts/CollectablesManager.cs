@@ -11,8 +11,10 @@ public class CollectablesManager : MonoBehaviour
     [SerializeField] public SO_Collectable[] _soForestCollectableList;
     [SerializeField] public SO_Collectable[] _soDesertCollectableList;
     [SerializeField] private float _collectableSpawnDistant;
-    
 
+    [SerializeField] private float _transitionTime;
+    private float _transitionCLOCK;
+    private bool _isTransitioning;
     public bool _isCollectableAvalable;
 
     private void OnEnable()
@@ -31,6 +33,22 @@ public class CollectablesManager : MonoBehaviour
             _isCollectableAvalable = true;
             player._collectableSpawnClock = 0f;
         }
+        if (_isTransitioning)
+        {
+            _transitionCLOCK += Time.deltaTime;
+            if (_transitionCLOCK >= _transitionTime)
+            {
+                _isTransitioning = false;
+
+                CollectableReset();
+                for (int i = 0; i < _colectableList.Length; i++)
+                {
+                    _anmation[i].SetInteger("erea", (((int)RunGameManeger.Instance._nextScreen)));
+                }
+            }
+        }
+
+
     }
     public void SetCollectable(int id)
     {
@@ -57,11 +75,8 @@ public class CollectablesManager : MonoBehaviour
     }
     private void OnchangeErea()
     {
-        CollectableReset();
-        for (int i = 0; i < _colectableList.Length; i++)
-        {
-            _anmation[i].SetInteger("erea", (((int)RunGameManeger.Instance._nextScreen)));
-        }
+        _isTransitioning = true;
+        _transitionCLOCK = 0f;
     } 
 
 }
