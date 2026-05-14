@@ -8,6 +8,8 @@ public class CollectablesManager : MonoBehaviour
     public int _coinCount;
     public bool[] _colectableList;
     [SerializeField] private Animator[] _anmation;
+    [SerializeField] public SO_Collectable[] _soForestCollectableList;
+    [SerializeField] public SO_Collectable[] _soDesertCollectableList;
     [SerializeField] private float _collectableSpawnDistant;
     
 

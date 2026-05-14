@@ -747,6 +747,16 @@ MonoBehaviour:
   - {fileID: 1899818108}
   - {fileID: 708572141}
   - {fileID: 4553535}
+  _soForestCollectableList:
+  - {fileID: 11400000, guid: 13e4dcea32e41e042969b684b9a70c01, type: 2}
+  - {fileID: 11400000, guid: 1df8cc304f9112b42a1ada6c0c9cd25e, type: 2}
+  - {fileID: 11400000, guid: 54064cb7af6cc3045b0165c0a4872d5e, type: 2}
+  - {fileID: 11400000, guid: 4acd083a2e0a7724dbed6538d6c73ab9, type: 2}
+  _soDesertCollectableList:
+  - {fileID: 11400000, guid: dcf15bff5fd51934098082bf39ea14ef, type: 2}
+  - {fileID: 11400000, guid: bc1419c124e542f49a1690cbbf342136, type: 2}
+  - {fileID: 11400000, guid: c90fd14a5f1c47c439bcdf99079bd0ad, type: 2}
+  - {fileID: 11400000, guid: 05110fec862c2344c835923730f337d0, type: 2}
   _collectableSpawnDistant: 200
   _isCollectableAvalable: 0
 --- !u!1 &85698162
